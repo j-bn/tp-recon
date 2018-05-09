@@ -1,0 +1,1616 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"target",
+				"targetsDescriptor"
+			],
+			[
+				"targets",
+				"targetsPos"
+			],
+			[
+				"groupsPo",
+				"groupsPossibleChars"
+			],
+			[
+				"poss",
+				"possibleChars"
+			],
+			[
+				"groupsPoss",
+				"groupsPossibleChars"
+			],
+			[
+				"imgD",
+				"imgData"
+			],
+			[
+				"get",
+				"getpixel"
+			],
+			[
+				"cap",
+				"captureRects"
+			],
+			[
+				"retur",
+				"returnCenters"
+			],
+			[
+				"capt",
+				"capturePoints"
+			],
+			[
+				"search",
+				"searchAreas"
+			],
+			[
+				"captu",
+				"captureField"
+			],
+			[
+				"update",
+				"updateRotation"
+			],
+			[
+				"norma",
+				"normalized"
+			],
+			[
+				"random",
+				"randomInUnitCircle"
+			],
+			[
+				"pygDraw",
+				"pygDrawText"
+			],
+			[
+				"item",
+				"itemSizeP"
+			],
+			[
+				"contS",
+				"contSizeP"
+			],
+			[
+				"pixe",
+				"pixels"
+			],
+			[
+				"groun",
+				"groundRes"
+			],
+			[
+				"test",
+				"testImagePath"
+			],
+			[
+				"last",
+				"lastWaypoint"
+			],
+			[
+				"nex",
+				"nextWaypoint"
+			],
+			[
+				"simul",
+				"simulateInterfaces"
+			],
+			[
+				"pad",
+				"padBoundingBox"
+			],
+			[
+				"boundin",
+				"boundingSquare"
+			],
+			[
+				"groups",
+				"groupsPosAvg"
+			],
+			[
+				"groupPos",
+				"groupsPosCount"
+			],
+			[
+				"gr",
+				"groupRefPoint"
+			],
+			[
+				"group",
+				"groupPosAvg"
+			],
+			[
+				"groupR",
+				"groupRange"
+			],
+			[
+				"field",
+				"fieldH"
+			],
+			[
+				"groupsPos",
+				"groupsPosAvg"
+			],
+			[
+				"transien",
+				"transients"
+			],
+			[
+				"ref",
+				"refPoint"
+			],
+			[
+				"targetOut",
+				"targetOuterSize"
+			],
+			[
+				"pixelC",
+				"pixelCount"
+			],
+			[
+				"pix",
+				"pixelSize"
+			],
+			[
+				"pixel",
+				"pixelArea"
+			],
+			[
+				"green",
+				"greenPixelCount"
+			],
+			[
+				"pred",
+				"predictedTargetCount"
+			],
+			[
+				"outpu",
+				"outputString"
+			],
+			[
+				"payload",
+				"payloadIndex"
+			],
+			[
+				"launc",
+				"launchSpeed"
+			],
+			[
+				"nL",
+				"nFlightConditions"
+			],
+			[
+				"nFl",
+				"nFlightSpeed"
+			],
+			[
+				"fl",
+				"flightSpeed"
+			],
+			[
+				"laun",
+				"launchConditions"
+			],
+			[
+				"Laun",
+				"LaunchCondition"
+			],
+			[
+				"launch",
+				"launchConditions"
+			],
+			[
+				"time",
+				"timeScale"
+			],
+			[
+				"rudd",
+				"rudderInput"
+			],
+			[
+				"board",
+				"boardForce"
+			],
+			[
+				"voxels",
+				"voxelsDisplacedAveragePosition"
+			],
+			[
+				"veloci",
+				"velocitySamplePoint"
+			],
+			[
+				"drag",
+				"dragForce"
+			],
+			[
+				"velo",
+				"velocitySamplePoint"
+			],
+			[
+				"AddF",
+				"AddForceAtPosition"
+			],
+			[
+				"point",
+				"pointVelocity"
+			],
+			[
+				"voxelsD",
+				"voxelsDisplacedCount"
+			],
+			[
+				"displace",
+				"displacedWaterVolume"
+			],
+			[
+				"voxel",
+				"voxelSize"
+			],
+			[
+				"voxelStatePosition",
+				"voxelStatePositionTotal"
+			],
+			[
+				"voxelSt",
+				"voxelStatePositionAverage"
+			],
+			[
+				"voxe",
+				"voxelStateCount"
+			],
+			[
+				"voxelSiz",
+				"voxelSizeV"
+			],
+			[
+				"vox",
+				"voxelsCount"
+			],
+			[
+				"backgr",
+				"background"
+			],
+			[
+				"desc",
+				"descA"
+			],
+			[
+				"testimoni",
+				"testimonial"
+			],
+			[
+				"depar",
+				"departmentClasses"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"backgrou",
+				"background"
+			],
+			[
+				"overflow",
+				"overflow"
+			],
+			[
+				"profile-",
+				"profile-image"
+			],
+			[
+				"check",
+				"checkImageAspectRatios"
+			],
+			[
+				"sess",
+				"sessionSiteMode"
+			],
+			[
+				"font-",
+				"font-size"
+			],
+			[
+				"show",
+				"showAAExpandModal"
+			],
+			[
+				"therap",
+				"Therapists"
+			],
+			[
+				"intermed",
+				"intermediaries"
+			],
+			[
+				"singular",
+				"singular_name"
+			],
+			[
+				"grou",
+				"groupPeopleContiner"
+			],
+			[
+				"box-",
+				"box-shadow"
+			],
+			[
+				"people-",
+				"people-listing-loader"
+			],
+			[
+				"people",
+				"peopleListing"
+			],
+			[
+				"has",
+				"hasClass\t.hasClass()"
+			],
+			[
+				"brand-cust",
+				"brand-custom-1"
+			],
+			[
+				"ind",
+				"indicator-color"
+			],
+			[
+				"border-",
+				"border-color"
+			],
+			[
+				"indicator",
+				"indicator-padding-top"
+			],
+			[
+				"toggle",
+				"toggleClass\t.toggleClass()"
+			],
+			[
+				"text-",
+				"text-align"
+			],
+			[
+				"Interm",
+				"intermediary"
+			],
+			[
+				"brand-",
+				"brand-primary"
+			],
+			[
+				"bac",
+				"background"
+			],
+			[
+				"marg",
+				"margin"
+			],
+			[
+				"data-",
+				"data-color"
+			],
+			[
+				"panel-default",
+				"panel-default-border"
+			],
+			[
+				"navbar",
+				"navbar-triangle"
+			],
+			[
+				"siteM",
+				"siteModeExplicit"
+			],
+			[
+				"array_key",
+				"array_key_exists"
+			],
+			[
+				"scale",
+				"scaleFrequency"
+			],
+			[
+				"grap",
+				"graphSettings"
+			],
+			[
+				"log",
+				"logarithmicVelocity"
+			],
+			[
+				"pantone-",
+				"pantone-red"
+			],
+			[
+				"text",
+				"text-align"
+			],
+			[
+				"margin",
+				"margin-top"
+			],
+			[
+				"conta",
+				"container"
+			],
+			[
+				"age",
+				"ageInputChanged"
+			],
+			[
+				"primar",
+				"primary-color"
+			],
+			[
+				"color",
+				"colorOptions"
+			],
+			[
+				"customis",
+				"customiseModal"
+			],
+			[
+				"margi",
+				"margin-bottom"
+			],
+			[
+				"size",
+				"size-inner"
+			],
+			[
+				"custom",
+				"customiseModal"
+			],
+			[
+				"background",
+				"background-color"
+			],
+			[
+				"shadow",
+				"shadow-opacity"
+			],
+			[
+				"panel-",
+				"panel-depth-darkeness"
+			],
+			[
+				"panel-depth",
+				"panel-depth-darkeness"
+			],
+			[
+				"depth",
+				"depth-darkeness"
+			],
+			[
+				"singul",
+				"singular_name"
+			],
+			[
+				"navb",
+				"navbar-triangle"
+			],
+			[
+				"person",
+				"person-hover-rotate"
+			],
+			[
+				"sing",
+				"singular_name"
+			],
+			[
+				"heading",
+				"headingData"
+			],
+			[
+				"head",
+				"headingData"
+			],
+			[
+				"singu",
+				"singular_name"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "recon.py",
+			"settings":
+			{
+				"buffer_size": 15643,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "command.py",
+			"settings":
+			{
+				"buffer_size": 5107,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "geometry.py",
+			"settings":
+			{
+				"buffer_size": 4823,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "geometry-test.py",
+			"settings":
+			{
+				"buffer_size": 1896,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "numpy-test.py",
+			"settings":
+			{
+				"buffer_size": 42,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "tesseract-test/test.bat",
+			"settings":
+			{
+				"buffer_size": 1110,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 127.0,
+		"last_filter": "instal",
+		"selected_items":
+		[
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"au",
+				"Autoprefix CSS"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"package install",
+				"Package Control: Install Package"
+			],
+			[
+				"disab",
+				"Package Control: Disable Package"
+			],
+			[
+				"disabl",
+				"Package Control: Disable Package"
+			],
+			[
+				"package",
+				"Package Control: Disable Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"packag",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 432.0
+	},
+	"console":
+	{
+		"height": 120.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '2deb499853c4371624f5a07e27c334aa' + 'bf8c4e67d14fb0525ba4f89698a6d7e1'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/Users/james/Dropbox/Projects/Python Projects/uas"
+	],
+	"file_history":
+	[
+		"/C/Users/james/AppData/Local/Temp/scp36660/public_html/themes/anita-james/page.php",
+		"/C/Users/james/AppData/Local/Temp/scp25095/public_html/themes/anita-james/about.txt",
+		"/C/Users/james/AppData/Local/Temp/scp26516/httpdocs/theme/triangle-2015/index.twig",
+		"/C/Users/james/Dropbox/Projects/Python Projects/uas/geometry-test.py",
+		"/C/Users/james/Dropbox/Projects/Python Projects/uas/test-ocr.py",
+		"/C/Users/james/Dropbox/Projects/Python Projects/uas/vector.py",
+		"/C/Users/james/Dropbox/Projects/Python Projects/uas/bounding-square-test/rbs-test.js",
+		"/C/Users/james/Dropbox/Projects/Python Projects/uas/recon.py",
+		"/C/Users/james/Dropbox/Projects/Python Projects/uas/bounding-square-test/rbs-test.html",
+		"/C/Users/james/AppData/Local/Temp/scp52901/httpdocs/theme/triangle-2015/index.twig",
+		"/C/Users/james/Dropbox/Projects/Python Projects/uas/images/tests.txt",
+		"/C/Users/james/Dropbox/Projects/Python Projects/uas/test.py",
+		"/C/Users/james/Developer/Unity Projects/UAS/Assets/Scritps/Payload.cs",
+		"/C/Users/james/Developer/Unity Projects/UAS/Assets/Scritps/PayloadLauncher.cs",
+		"/C/Users/james/AppData/Roaming/Adobe/Lightroom/Preferences/Lightroom 6 Preferences.agprefs",
+		"/C/Users/james/Dropbox/Apps/WinSCP FTP Backup 07-12-17.ini",
+		"/C/Users/james/AppData/Roaming/Adobe/Lightroom/Develop Presets/User Presets/Fujifilm Base.lrtemplate",
+		"/C/Users/james/Developer/Web Projects/uas/payload-drop-matter/index.html",
+		"/C/Users/james/Developer/Web Projects/uas/payload-drop-matter/index.js",
+		"/C/Users/james/Developer/Web Projects/uas/payload-drop/index.html",
+		"/C/Users/james/Developer/Web Projects/uas/payload-drop/index.js",
+		"/C/Users/james/Developer/Web Projects/uas/engine.js",
+		"/C/Users/james/Developer/Unity Projects/Sim/Assets/Scripts/WaterFin.cs",
+		"/C/Users/james/Developer/Unity Projects/Sim/Assets/Scripts/Bouyant.cs",
+		"/C/Users/james/Developer/Unity Projects/Sim/Assets/Scripts/BoatController.cs",
+		"/C/Program Files (x86)/Steam/steamapps/common/Kerbal Space Program/saves/Iron Man 1-3-1/quicksave.sfs",
+		"/C/Program Files (x86)/Steam/steamapps/common/Kerbal Space Program/saves/Iron Man 1-3-1/Thread 2 (Back from day 6 to 4).sfs",
+		"/C/Users/james/Developer/Unity Projects/Sim/Assets/Scripts/SmoothFollowFromStandardAssets",
+		"/C/Users/james/AppData/Local/Temp/scp46135/httpdocs/Ruth-PhD/base.php",
+		"/C/Users/james/AppData/Local/Temp/scp28268/httpdocs/Ruth-PhD/index.php",
+		"/C/Users/james/AppData/Local/Temp/scp00556/httpdocs/ruths-phd/index.php",
+		"/C/Users/james/AppData/Local/Temp/scp00761/httpdocs/ruths-phd/base.php",
+		"/C/Users/james/AppData/Local/Temp/scp48452/httpdocs/ruths-phd/index.php",
+		"/C/Users/james/AppData/Local/Temp/scp52832/httpdocs/ruths-phd/index.php",
+		"/C/Users/james/AppData/Local/Temp/scp40667/httpdocs/.htaccess",
+		"/C/Users/james/AppData/Local/Temp/scp28164/httpdocs/ruths-phd/.htaccess",
+		"/C/Users/james/AppData/Local/Temp/scp24707/httpdocs/ruths-phd/index.php",
+		"/C/Users/james/AppData/Local/Temp/scp24673/httpdocs/ruths-phd/index.php",
+		"/C/Users/james/AppData/Local/Temp/scp20678/httpdocs/theme/triangle-2015/listing_contacts.twig",
+		"/C/Users/james/AppData/Local/Temp/scp26300/httpdocs-new-bolt-3-2/theme/triangle-2015/listing_contacts.twig",
+		"/C/Users/james/AppData/Local/Temp/scp37178/httpdocs/src/Controllers/Frontend.php",
+		"/C/Users/james/AppData/Local/Temp/scp38471/httpdocs/src/Controllers/Frontend (Working Backup).php",
+		"/C/Users/james/AppData/Local/Temp/scp41532/app/config/routing-note.txt",
+		"/C/Users/james/AppData/Local/Temp/scp37143/app/config/routing.yml",
+		"/C/Users/james/AppData/Local/Temp/scp44160/.bolt.yml",
+		"/C/Users/james/AppData/Local/Temp/scp39313/NOTES.txt",
+		"/C/Users/james/AppData/Local/Temp/scp38424/backups/triangle-2-0-backup-before-upgrade-2017-07-03-16-20-to-19-30/app/config/routing.yml",
+		"/C/Users/james/AppData/Local/Temp/scp15944/private/README.txt",
+		"/C/WAMP64/www/triangle-2.0/theme/triangle-2015/css/app.less",
+		"/C/Users/james/AppData/Local/Temp/scp42774/httpdocs/app/config/contenttypes.yml",
+		"/C/Users/james/AppData/Local/Temp/scp58428/httpdocs/app/config/taxonomy.yml",
+		"/C/Users/james/AppData/Local/Temp/scp58046/httpdocs/theme/triangle-2015/index.twig",
+		"/C/Users/james/AppData/Local/Temp/scp57193/httpdocs/theme/triangle-2015/_aa_content.twig",
+		"/C/WAMP64/www/triangle-2.0/theme/triangle-2015/_header.twig",
+		"/C/WAMP64/www/triangle-2.0/theme/triangle-2015/index.twig",
+		"/C/WAMP64/www/triangle-2.0/theme/triangle-2015/_aa_content.twig",
+		"/C/Users/james/AppData/Local/Temp/scp48058/httpdocs/theme/triangle-2015/_top_testimonials.twig",
+		"/C/Users/james/AppData/Local/Temp/scp38294/httpdocs/theme/triangle-2015/_top_testimonials.twig",
+		"/C/Users/james/AppData/Local/Temp/scp37506/httpdocs/theme/triangle-2015/person.twig",
+		"/C/WAMP64/www/triangle-2.0/theme/triangle-2015/listing_people.twig",
+		"/C/Users/james/AppData/Local/Temp/scp17425/httpdocs/app/config/contenttypes.yml",
+		"/C/WAMP64/www/triangle-2.0/theme/triangle-2015/person.twig",
+		"/C/WAMP64/www/triangle-2.0/theme/triangle-2015/person-v1.twig",
+		"/C/WAMP64/www/triangle-2.0/theme/triangle-2015/javascripts/app.js",
+		"/C/Users/james/Desktop/react-dom.min.js",
+		"/C/Users/james/AppData/Local/Temp/scp18182/httpdocs/theme/triangle-2015/index.twig",
+		"/C/Users/james/AppData/Local/Temp/scp30378/httpdocs/theme/triangle-2015/_twitter_feed.twig",
+		"/C/Users/james/AppData/Local/Temp/scp51453/httpdocs/theme/triangle-2015/_top_testimonials.twig",
+		"/C/Users/james/AppData/Local/Temp/scp51164/httpdocs/theme/triangle-2015/person.twig",
+		"/C/Users/james/AppData/Local/Temp/scp25188/httpdocs/theme/triangle-2015/person.twig",
+		"/C/WAMP64/www/triangle-2.0/theme/triangle-2015/_top_testimonials.twig",
+		"/C/WAMP64/www/triangle-2.0/theme/triangle-2015/listing_testimonials.twig",
+		"/C/Users/james/AppData/Local/Temp/scp29391/httpdocs/theme/triangle-2015/listing_testimonials.twig",
+		"/C/Users/james/AppData/Local/Temp/scp42748/httpdocs/app/config/contenttypes.yml",
+		"/C/Users/james/Developer/Web Projects/tina-davies/app/config/config.yml",
+		"/C/WAMP64/www/triangle-2.0/app/config/config.yml",
+		"/C/Users/james/AppData/Local/Temp/scp10316/httpdocs/app/config/contenttypes.yml",
+		"/C/Users/james/AppData/Local/Temp/scp16688/httpdocs/app/config/routing.yml",
+		"/C/Users/james/AppData/Local/Temp/scp11816/httpdocs/theme/triangle-2015/person.twig",
+		"/C/Users/james/AppData/Local/Temp/scp37729/httpdocs/theme/triangle-2015/listing_resources.twig",
+		"/C/Users/james/AppData/Local/Temp/scp18292/httpdocs/app/config/taxonomy.yml",
+		"/C/Users/james/AppData/Local/Temp/scp46383/httpdocs/theme/triangle-2015/_aa_content.twig",
+		"/C/Users/james/AppData/Local/Temp/scp20765/httpdocs/theme/triangle-2015/service.twig",
+		"/C/Users/james/AppData/Local/Temp/scp20820/httpdocs/app/config/config.yml",
+		"/C/Users/james/AppData/Local/Temp/scp36756/httpdocs/theme/triangle-2015/config.yml",
+		"/C/Users/james/Downloads/Ableton live Suite v9.5 WiN x86 x64-d33p57a7u5/Ableton live Suite v9.5 WiN x86 x64-d33p57a7u5/iNFO.nfo",
+		"/C/Users/james/AppData/Local/Temp/scp37273/httpdocs/theme/triangle-2015/listing_resource_categories.twig",
+		"/C/Users/James/AppData/Local/Temp/scp15829/httpdocs/theme/triangle-2015/javascripts/app.js",
+		"/C/WAMP/www/triangle-2.0/theme/triangle-2015/css/app.less",
+		"/C/Users/James/AppData/Local/Temp/scp30089/httpdocs/app/config/contenttypes.yml",
+		"/C/Users/James/AppData/Local/Temp/scp04924/httpdocs/theme/triangle-2015/listing_people.twig",
+		"/C/Users/James/AppData/Local/Temp/scp52995/httpdocs/theme/triangle-2015/testimonial.twig",
+		"/C/Users/James/AppData/Local/Temp/scp53835/httpdocs/theme/triangle-2015/page.twig",
+		"/C/Users/James/AppData/Local/Temp/scp19689/httpdocs/theme/triangle-2015/_header.twig",
+		"/C/Users/James/AppData/Local/Temp/scp18049/httpdocs/theme/triangle-2015/index.twig",
+		"/C/Users/James/AppData/Local/Temp/scp41714/httpdocs/theme/triangle-2015/javascripts/app.js",
+		"/C/WAMP/www/triangle-2.0/theme/triangle-2015/css/app.css",
+		"/C/Users/James/AppData/Local/Temp/scp21353/httpdocs/theme/triangle-2015/_feedback_panel.twig",
+		"/C/Users/James/AppData/Local/Temp/scp25880/httpdocs/theme/triangle-2015/listing_resources.twig",
+		"/C/Users/James/AppData/Local/Temp/scp50352/httpdocs/theme/triangle-2015/listing_resource_categories.twig",
+		"/C/Users/James/AppData/Local/Temp/scp14722/httpdocs/theme/triangle-2015/_aa_content.twig",
+		"/C/Users/James/AppData/Local/Temp/scp06017/httpdocs/app/config/config.yml",
+		"/C/Users/James/AppData/Local/Temp/scp55747/httpdocs/app/config/taxonomy.yml",
+		"/C/Users/James/AppData/Local/Temp/scp07493/httpdocs/theme/triangle-2015/listing.twig",
+		"/C/WAMP/www/triangle-2.0/theme/triangle-2015/javascripts/app.js",
+		"/C/WAMP/www/triangle-2.0/theme/triangle-2015/listing_people.twig",
+		"/C/WAMP/www/triangle-2.0/theme/triangle-2015/_header.twig",
+		"/C/WAMP/www/triangle-2.0/src/Controllers/Frontend.php",
+		"/C/WAMP/www/triangle-2.0/src/Controllers/Frontend_StoreMode.php",
+		"/C/WAMP/www/triangle-2.0/src/Controllers/Frontend_Session.php",
+		"/C/Users/James/AppData/Local/Temp/scp12019/public_html/designer.js",
+		"/C/WAMP/www/triangle-2.0/theme/triangle-2015/_footer.twig",
+		"/C/WAMP/www/triangle-2.0/theme/triangle-2015/_auto_size.twig",
+		"/C/WAMP/www/triangle-2.0/theme/triangle-2015/listing.twig",
+		"/C/WAMP/www/triangle-2.0/app/config/config.yml",
+		"/C/WAMP/www/triangle-2.0/app/config/contenttypes.yml",
+		"/C/WAMP/www/triangle-2.0/app/config/taxonomy.yml",
+		"/C/WAMP/www/triangle-2.0/theme/triangle-2015/_aa_content.twig",
+		"/C/WAMP/www/triangle-2.0/theme/triangle-2015/config.yml",
+		"/C/WAMP/www/triangle-2.0/theme/triangle-2015/record.twig",
+		"/C/WAMP/www/triangle-2.0/theme/triangle-2015/entry.twig",
+		"/C/WAMP/www/triangle-2.0/src/Controllers/Frontend_Email.php",
+		"/C/WAMP/www/triangle-2.0/theme/triangle-2015/index.twig",
+		"/C/WAMP/www/triangle-2.0/theme/triangle-2015/listing_resources.twig",
+		"/C/WAMP/www/triangle-2.0/theme/triangle-2015/_recordfooter.twig",
+		"/C/WAMP/www/triangle-2.0/theme/triangle-2015/_resource_mailto.twig",
+		"/C/WAMP/www/triangle-2.0/theme/triangle-2015/listing_entries.twig",
+		"/C/WAMP/www/triangle-2.0/theme/triangle-2015/_service_summary_panel.twig"
+	],
+	"find":
+	{
+		"height": 23.0
+	},
+	"find_in_files":
+	{
+		"height": 118.0,
+		"where_history":
+		[
+			"C:\\WAMP\\www\\triangle-2.0\\theme\\triangle-2015",
+			"C:\\WAMP\\www\\triangle-2.0",
+			"C:\\WAMP\\www\\intolerant-people"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"save",
+			"ceil",
+			"img",
+			"/",
+			").toPixel()",
+			")",
+			"+",
+			"numpy",
+			"loc",
+			"2",
+			"rint",
+			"int",
+			"round",
+			"rounded",
+			"return None",
+			"# to do",
+			"r",
+			"math",
+			"800",
+			"'-psm 10'",
+			"mapCount",
+			"cB",
+			"'",
+			"boundingSquare",
+			"%",
+			"(\"\")",
+			"groupRefPointI",
+			"0",
+			"~",
+			"!",
+			"X",
+			"^",
+			"pixels",
+			"variations",
+			"edges",
+			"image",
+			"Image",
+			"image",
+			"original",
+			"auto",
+			"v",
+			"flightSpeed",
+			"i",
+			"payload",
+			"flightSpeed",
+			"Render",
+			"render",
+			"ball",
+			"payload",
+			"boxA",
+			"scenario",
+			"funds",
+			"science",
+			"resources",
+			"science",
+			"boardCollider",
+			"pointVelocity.normalized",
+			",",
+			"localVector",
+			"indexVector",
+			"length",
+			"void",
+			"voxelsCount",
+			"i",
+			"x",
+			"ol",
+			"MultiViews",
+			"public",
+			"Bolt\\Controllers\\Frontend:",
+			"comment",
+			"youtube",
+			"responsive",
+			"departmentHeader",
+			"size",
+			"resource",
+			"profile",
+			"categories",
+			"ADDED",
+			"order",
+			"splitText",
+			"text",
+			"span",
+			"img",
+			"h2",
+			"contact",
+			"&#x0D;",
+			"iframe",
+			"Rab",
+			"5px",
+			"a",
+			"\"",
+			"a",
+			"customise",
+			"myModalLabel",
+			"scroll",
+			".page-header",
+			"Rabio",
+			"body",
+			"Body",
+			"book",
+			"BEGIN",
+			"record.datepublish",
+			"isYT",
+			"text-shadow",
+			"danger",
+			"1",
+			"danger",
+			"li",
+			"text",
+			"Text",
+			"text",
+			"Text",
+			"text",
+			"Text",
+			"text",
+			"Text",
+			"text",
+			"Text",
+			"text",
+			"people",
+			"150px",
+			"s",
+			"S",
+			"s",
+			", ",
+			"danger",
+			"1",
+			"10px"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"np",
+			"**",
+			"",
+			".navbar-yt",
+			"darkness"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "recon.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 15643,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								15375,
+								15375
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 5826.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "command.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5107,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								921,
+								921
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python 3/Python3.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "geometry.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4823,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								225,
+								225
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "geometry-test.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1896,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								813,
+								612
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 84.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "numpy-test.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 42,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								42,
+								42
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "tesseract-test/test.bat",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1110,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1110,
+								1110
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Batch File/Batch File.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 62.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 22.0
+	},
+	"input":
+	{
+		"height": 54.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "UAS.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"triangle-2015\\_top_testimonials.twig"
+			],
+			[
+				"testimoni",
+				"triangle-2015\\listing_testimonials.twig"
+			],
+			[
+				"session",
+				"triangle-2.0\\src\\Controllers\\Frontend_Session.php"
+			],
+			[
+				"storemode",
+				"triangle-2.0\\src\\Controllers\\Frontend_StoreMode.php"
+			],
+			[
+				"header",
+				"triangle-2015\\_header.twig"
+			],
+			[
+				"footer",
+				"triangle-2015\\_footer.twig"
+			],
+			[
+				"app.js",
+				"triangle-2015\\javascripts\\app.js"
+			],
+			[
+				"taxono",
+				"triangle-2.0\\app\\config\\taxonomy.yml"
+			],
+			[
+				"content",
+				"triangle-2.0\\app\\config\\contenttypes.yml"
+			],
+			[
+				"config",
+				"triangle-2.0\\app\\config\\config.yml"
+			],
+			[
+				"confi",
+				"triangle-2015\\config.yml"
+			],
+			[
+				"_aa",
+				"triangle-2015\\_aa_content.twig"
+			],
+			[
+				"listing",
+				"triangle-2015\\listing.twig"
+			],
+			[
+				"auto",
+				"triangle-2015\\_auto_size.twig"
+			],
+			[
+				"aa",
+				"triangle-2015\\_aa_content.twig"
+			],
+			[
+				"app.l",
+				"triangle-2015\\css\\app.less"
+			],
+			[
+				"index",
+				"triangle-2015\\index.twig"
+			],
+			[
+				"fronten",
+				"triangle-2.0\\src\\Controllers\\Frontend_Email.php"
+			],
+			[
+				"entry",
+				"triangle-2015\\entry.twig"
+			],
+			[
+				"record",
+				"triangle-2015\\record.twig"
+			],
+			[
+				"aa_",
+				"triangle-2015\\_aa_content.twig"
+			],
+			[
+				"resources",
+				"triangle-2015\\listing_resources.twig"
+			],
+			[
+				"fronte",
+				"triangle-2.0\\src\\Controllers\\Frontend_Email.php"
+			],
+			[
+				"frontend",
+				"triangle-2.0\\src\\Controllers\\Frontend.php"
+			],
+			[
+				"app",
+				"triangle-2015\\javascripts\\app.js"
+			],
+			[
+				"listingpeopl",
+				"triangle-2015\\listing_people.twig"
+			],
+			[
+				"service",
+				"triangle-2015\\service.twig"
+			],
+			[
+				"servi",
+				"triangle-2015\\service.twig"
+			],
+			[
+				"aside",
+				"triangle-2015\\_aside.twig"
+			],
+			[
+				"app.e",
+				"triangle-2015\\css\\app.less"
+			],
+			[
+				"aa_co",
+				"triangle-2015\\_aa_content.twig"
+			],
+			[
+				"app.les",
+				"triangle-2015\\css\\app.less"
+			],
+			[
+				"ta",
+				"triangle-2.0\\app\\config\\taxonomy.yml"
+			],
+			[
+				"app.",
+				"triangle-2015\\javascripts\\app.js"
+			],
+			[
+				"pers",
+				"triangle-2015\\person.twig"
+			],
+			[
+				"menu",
+				"triangle-2.0\\app\\config\\menu.yml"
+			],
+			[
+				"tax",
+				"triangle-2.0\\app\\config\\taxonomy.yml"
+			],
+			[
+				"listingp",
+				"triangle-2015\\listing_people.twig"
+			],
+			[
+				"person",
+				"triangle-2015\\person.twig"
+			],
+			[
+				"soc",
+				"triangle-2015\\_social_media_panel.twig"
+			],
+			[
+				"contact",
+				"triangle-2015\\_contact_cell.twig"
+			],
+			[
+				"social",
+				"triangle-2015\\_social_media_panel.twig"
+			],
+			[
+				"p",
+				"triangle-2015\\person.twig"
+			],
+			[
+				"listing_res",
+				"triangle-2015\\listing_resource_categories.twig"
+			],
+			[
+				"app.cs",
+				"triangle-2015\\css\\app.css"
+			],
+			[
+				"peopl",
+				"triangle-2015\\listing_people.twig"
+			],
+			[
+				"resource",
+				"triangle-2015\\listing_resources.twig"
+			],
+			[
+				"page",
+				"triangle-2015\\page.twig"
+			],
+			[
+				"template",
+				"triangle-2.0\\vendor\\twig\\twig\\lib\\Twig\\Template.php"
+			],
+			[
+				"template.php",
+				"triangle-2.0\\vendor\\guzzlehttp\\guzzle\\src\\UriTemplate.php"
+			],
+			[
+				"date",
+				"triangle-2015\\_date_stamp.twig"
+			],
+			[
+				"contenty",
+				"triangle-2.0\\app\\config\\contenttypes.yml"
+			],
+			[
+				"listnig",
+				"triangle-2015\\listing_resource_categories.twig"
+			],
+			[
+				"front",
+				"triangle-2.0\\src\\Controllers\\Frontend.php"
+			],
+			[
+				"cont",
+				"triangle-2.0\\app\\config\\contenttypes.yml"
+			],
+			[
+				"heade",
+				"triangle-2015\\_header.twig"
+			],
+			[
+				"listing_peo",
+				"triangle-2015\\listing_people.twig"
+			],
+			[
+				"routin",
+				"triangle-2.0\\app\\config\\routing.yml"
+			],
+			[
+				"taxonomy",
+				"triangle-2.0\\app\\config\\taxonomy.yml"
+			],
+			[
+				"routing",
+				"triangle-2.0\\app\\config\\routing.yml"
+			],
+			[
+				"taxo",
+				"triangle-2.0\\app\\config\\taxonomy.yml"
+			],
+			[
+				"contentty",
+				"triangle-2.0\\app\\config\\contenttypes.yml"
+			],
+			[
+				"magic",
+				"triangle-2015\\css\\magic-bootstrap.less"
+			],
+			[
+				"rout",
+				"triangle-2.0\\app\\config\\routing.yml"
+			],
+			[
+				"app.less",
+				"triangle-2015\\css\\app.less"
+			],
+			[
+				"aa_conte",
+				"triangle-2015\\_aa_content.twig"
+			],
+			[
+				"conten",
+				"triangle-2.0\\app\\config\\contenttypes.yml"
+			],
+			[
+				"aac",
+				"triangle-2015\\_aa_content.twig"
+			],
+			[
+				"contentt",
+				"triangle-2.0\\app\\config\\contenttypes.yml"
+			],
+			[
+				"app.css",
+				"triangle-2015\\css\\app.css"
+			],
+			[
+				"roles",
+				"triangle-2.0\\app\\view\\twig\\roles\\roles.twig"
+			],
+			[
+				"permis",
+				"triangle-2.0\\app\\config\\permissions.yml"
+			],
+			[
+				"subsearc",
+				"triangle-2015\\_sub_searchbox.twig"
+			],
+			[
+				"submenu",
+				"triangle-2015\\_sub_menu.twig"
+			],
+			[
+				"taxon",
+				"triangle-2.0\\app\\config\\taxonomy.yml"
+			],
+			[
+				"feedbac",
+				"triangle-2015\\_feedback_panel.twig"
+			],
+			[
+				"aa_con",
+				"triangle-2015\\_aa_content.twig"
+			],
+			[
+				"page.",
+				"triangle-2015\\page.twig"
+			],
+			[
+				"php",
+				"triangle-2.0\\PHPMailer\\PHPMailerAutoload.php"
+			],
+			[
+				"feed",
+				"triangle-2015\\_feedback_panel.twig"
+			],
+			[
+				"recordfoot",
+				"triangle-2015\\_recordfooter.twig"
+			],
+			[
+				"recor",
+				"triangle-2015\\record.twig"
+			],
+			[
+				"recordfott",
+				"triangle-2015\\_recordfooter.twig"
+			],
+			[
+				"_feed",
+				"triangle-2015\\_feedback_panel.twig"
+			],
+			[
+				"listing_p",
+				"triangle-2015\\listing_people.twig"
+			],
+			[
+				"_cont",
+				"triangle-2015\\_contact_cell.twig"
+			],
+			[
+				"menu.",
+				"triangle-2.0\\app\\config\\menu.yml"
+			],
+			[
+				"listnig_peo",
+				"triangle-2015\\listing_people.twig"
+			],
+			[
+				"listingser",
+				"triangle-2015\\listing_services.twig"
+			],
+			[
+				"routi",
+				"triangle-2.0\\app\\config\\routing.yml"
+			],
+			[
+				"routing.",
+				"triangle-2.0\\app\\config\\routing.yml"
+			],
+			[
+				"feedb",
+				"triangle-2015\\_feedback_panel.twig"
+			],
+			[
+				"_fe",
+				"triangle-2015\\_feedback_panel.twig"
+			],
+			[
+				"permi",
+				"triangle-2.0\\app\\config\\permissions.yml"
+			],
+			[
+				"sub_tax",
+				"triangle-2.0\\app\\theme_defaults\\_sub_taxonomylinks.twig"
+			],
+			[
+				"inde",
+				"triangle-2015\\index.twig"
+			],
+			[
+				"varia",
+				"triangle-2015\\bootstrap\\less\\variables.less"
+			],
+			[
+				"_sub",
+				"triangle-2015\\_sub_menu.twig"
+			],
+			[
+				"config.yml",
+				"triangle-2.0\\app\\config\\config.yml"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"C:\\WAMP\\www\\portfolio-2016\\Portfolio 2016.sublime-project"
+			],
+			[
+				"luc",
+				"C:\\WAMP\\www\\lucy-jones\\Lucy Jones.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 202.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

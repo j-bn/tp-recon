@@ -1,0 +1,63 @@
+Could just be that more and more memory is being accumulated due to mechanisms other than the threads themselves
+
+
+
+
+
+
+
+
+
+
+
+
+STACKOVERFLOW QUESTION DRAFT
+----------------------------
+
+Title: Memory errors after multiple executions of python concurrent.futures threads
+
+Tags: python concurrent.futures concurrency multithreading memory-leaks
+
+Text:
+
+ I have a system that periodically captures images from a drone and concurrently processes them using basic computer vision algorithms to identify any 'markers' in the image. The main script handles the guidance of the drone and capture of new images. When an image is captured, it should be processed as soon as possible. Each 3280x2464 PNG image takes ~20s to process on my laptop.
+
+I am using the concurrent.futures python module to do this, which is great as it essentially handles the 'queuing' of the images intrinsically. 
+    
+    def processImage(img, pixelSize, imgID):
+	    print("Started processing image", imgID)
+
+        # -- do a whole bunch of processing, including NumPy and iterative --
+        # -- stuff which I have assumed is not relevant to the question --
+
+        # imgID is just there to provide a reference to the image
+        # that was processed
+        # targetsDescriptor is simply the output - an array of
+        # tuples and arrays specifying the marker(s) found
+	    return imgID, targetsDescriptor
+
+    executor = concurrent.futures.ThreadPoolExecutor(max_workers=4)
+
+    def imageProcessed(future):
+	    ciIndex, targetsDescriptor = future.result()
+
+        # handle processed image
+
+    def imageCaptured(imageCap):
+        # prepare image
+ 
+        # submit to executor
+    	future = executor.submit(processImage, imageCap.image, ciIndex)
+    	future.add_done_callback(imageProcessed)
+
+That's pretty much it - I have left the rest out because it's very lengthy and subject-specific.
+
+This works very well but mostly (I am randomising the simulation conditions for testing purposes) during the processing of around the 22nd image I get a MemoryError (usually triggered by an image-wise NumPy operation but I'm not convinced that is the culprit).
+
+Python's memory usage does seem to creep up and up throughout the process, hitting problems at about ~1.5GB (strange because I have 6GB). This is what worries me as I would expect it to follow a sawtooth pattern once 4 workers are running. However, as you'd expect, the memory usage does seem to drop before ramping up again every time an image is processed - as if the thread is being garbage collected in between jobs.
+
+It seems like the threads are being 're-used' for each future and are only partially clearing their memory usage, creating some sort of memory leak that causes problems with NumPy only once it has had time to accumulate to ~1GB.
+
+How should I approach fixing this?
+Any help would be much appreciated
+Thanks

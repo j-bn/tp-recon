@@ -1,0 +1,2 @@
+Test 1		Initial test
+Angles		6 unmarked targets at 0, 20, 40, 60, 80 and 90 degree rotations, avoiding any issues from proximity or shared i,j values
