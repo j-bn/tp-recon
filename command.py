@@ -19,6 +19,9 @@ import concurrent.futures
 # Utility functions
 # -----------------
 
+def header(s):
+        return "\n" + underline(s)
+
 def underline(s):
 	return s + "\n" + (len(s) * "-")
 
@@ -58,6 +61,9 @@ def frustrumFieldRect(alt, fovP, fovS):
 
 def createSearchAreas(n):
 	global inputSearchAreas
+	
+	if input("Type Y to force manual input:").lower() == "y":
+            inputSearchAreas = 1
 
 	if inputSearchAreas: # manually input search areas
 		print(underline("Search Area Setup"))
@@ -167,7 +173,7 @@ print("sys.platform = " + sys.platform)
 
 simulateFCInterface = 1
 simulateCamera = 1
-inputSearchAreas = 1
+inputSearchAreas = 0 # may be modified in createSearchAreas
 
 # System Parameters
 # -----------------
@@ -186,32 +192,48 @@ captureAlt = 80
 fovS, fovP = 62.2, 48.8 	# https://www.raspberrypi.org/documentation/hardware/camera/README.md
 
 # Define coordinates
-print("")
-print("Coordinate Systems")
-print("------------------")
+print(header("Coordinate Systems"))
 print("North = N =  0 degrees = +ve Y cartesian")
 print("East  = E = 90 degrees = +ve X cartesian")
-print("")
 
 # Mission Parameters
+# ------------------
+print(header("Mission Setup"))
 tolWP = Waypoint(Vector2(20,20), None, 0) # Take-off and landing
 searchAreas = createSearchAreas(2)
 searchAreaCount = len(searchAreas)
+
+# Describe key SA charachteristics
+print("Key search area charachteristics:")
+for sa in searchAreas:
+    sDist = round(sa.center.magnitude(),2)
+    sArea = round(sa.area(),2)
+    print(" Search area of", sArea, "m2", sDist, "m from the origin")
+
 targetsPerSearchArea = 2
 altitudeLimits = [20 * 0.3048, 400 * 0.3048] # convert from feet to metres
+
 targetSize = 2 # m, size=width=height
-overlapRequired = targetSize / 2 * 2**0.5 # greatest distance of edge from centre
+overlapFactor = input("Enter overlap factor:") or 1 # defaults to 1...
+# - where a single target rotated to (worst case)
+# - 45 degrees and placed at the boundary between captures will appear only just fully in both images 
+overlapRequired = targetSize * 2**0.5 * overlapFactor
+
+print("Overlap required:", round(overlapRequired, 2), "m")
 
 # Setup GPS Locale
 # ----------------
 gpsOrigin = GPSPosition(51.242346, -0.590729)
 gpsLocale = GPSLocale(gpsOrigin)
+print("GPS locale set up at", gpsOrigin)
 
 # Plan Flight
 # -----------
+print(header("Flight Planning"))
 # image height 'up' is considered in the aircraft 'forward' direction, but may be more than width
 captureFieldRef = frustrumFieldRect(captureAlt, rad(fovP), rad(fovS)) # unrotated, unpositioned - relative to the aircraft in both position and orientation
 w, h = captureFieldRef.width(), captureFieldRef.height()
+
 print("Calculated capture field @", captureAlt, "m =", captureFieldRef.size(), "m")
 
 # tracking variables
@@ -225,18 +247,29 @@ rtbInitiated = 0
 shutdownFlag = 0
 
 # adjust image sizes for flight planning (approximating overlap)
-pw = w - overlapRequired * 2
-ph = h - overlapRequired * 2
+pw = w - overlapRequired
+ph = h - overlapRequired
+#print("Adjusted image field sizes for flight planning:", (pw, ph))
 # [TODO] may lead to duplicates when targets are at edge of images
 #			adjust recon.py to reject targets that are don't fit the target form
 # 			and command.py to identify and mark duplicates
 
 # subdivide search area into capture rects
 if 1:  # [TODO] just for debugging - shows capture rects
+        # captureRects are of the smaller size, not including overlap so dont show it's effect when drawn
 	captureRects = []
 	for sa in searchAreas:
 		rects = Rect2.packUniform(sa, ph, pw, 0)
 		captureRects.extend(rects)
+		
+	# test actual overlap
+	# (compares distance between capture points to *real* image field size)
+	print("Actual calculated overlap:\n correct number below should be just greater than root2 * target width = 2.83 for competition")
+	a = captureRects[0]
+	b = captureRects[1]
+	centreDist = (a.center - b.center).magnitude()
+	print(" Overlap by width:",  round(w - centreDist, 2), "m")
+	print(" Overlap by height:", round(h - centreDist, 2), "m")
 
 # define search area waypoints
 saWaypoints = [[]] * searchAreaCount
@@ -269,9 +302,10 @@ def getNextWaypoint():
 	saAllTargetsFound = saTargetsFound >= targetsPerSearchArea
 
 	# ending case
-	if nextWaypoint == tolWP and lastWaypoint != tolWP:
-		flightComplete = 1
-		print("Flight complete")
+        if nextWaypoint == tolWP and lastWaypoint != tolWP:
+                flightComplete = 1
+                strTime = round(getTime(),2)
+		print("Flight complete at", strTime)
 		return None
 
 	# move to next search area if ok
@@ -322,7 +356,8 @@ def checkMissionComplete():
 	# print("Checking if mission complete:", "AIC =", allImagesCaptured, "and ACIP =", allCapturedImagesProcessed)
 
 	if allImagesCaptured and allCapturedImagesProcessed:
-		print("Mission complete - all", numImagesCaptured, "images captured and processed")
+                sTime = round(getTime(),2)
+		print("Mission complete at", sTime, "- all", numImagesCaptured, "images captured and processed")
 
 		# [TODO] Summarise info
 		missionReport()
@@ -353,7 +388,7 @@ def getTime():
 # Image Handling
 # --------------
 
-ipWorkerCount = 4
+ipWorkerCount = 1
 capturedImages = []
 
 # setup workers
@@ -579,6 +614,7 @@ pygame.init()
 size = width, height = 600, 600
 centre = Vector2(width, height) / 2
 scale = 0.5
+dt = 1/60
 
 dirLength = 5
 
@@ -675,6 +711,7 @@ while 1:
 	# draw debug text
 	pygDrawText("last: " + str(lastWaypoint), black, (20,20))
 	pygDrawText("next: " + str(nextWaypoint), black, (20,40))
+	pygDrawText("time: " + str(round(getTime(), 1)) + "s", black, (20,60))
 
 	# draw captured images
 	for ci in capturedImages:
@@ -722,4 +759,4 @@ while 1:
 
 	# cycle frame
 	pygame.display.update()
-	time.sleep(1/60)
+	time.sleep(dt)
