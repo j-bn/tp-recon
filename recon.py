@@ -15,7 +15,7 @@ import pytesseract
 if sys.platform.startswith('win'):
 	pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files (x86)\\Tesseract-OCR\\tesseract.exe'
 elif sys.platform.startswith('linux'):
-	pytesseract.pytesseract.tesseract_cmd = '\\usr\\bin\\tesseract'
+	pytesseract.pytesseract.tesseract_cmd = '/usr/bin/tesseract' 	# linux uses forward slashes so no need for back slashes
 else:
 	print('ERROR Unkown platform, cannot set tesseract-ocr location')
 

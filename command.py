@@ -20,7 +20,7 @@ import concurrent.futures
 # -----------------
 
 def header(s):
-        return "\n" + underline(s)
+		return "\n" + underline(s)
 
 def underline(s):
 	return s + "\n" + (len(s) * "-")
@@ -63,7 +63,7 @@ def createSearchAreas(n):
 	global inputSearchAreas
 	
 	if input("Type Y to force manual input:").lower() == "y":
-            inputSearchAreas = 1
+				inputSearchAreas = 1
 
 	if inputSearchAreas: # manually input search areas
 		print(underline("Search Area Setup"))
@@ -202,16 +202,15 @@ print(header("Mission Setup"))
 tolWP = Waypoint(Vector2(20,20), None, 0) # Take-off and landing
 searchAreas = createSearchAreas(2)
 searchAreaCount = len(searchAreas)
+targetsPerSearchArea = 2
+altitudeLimits = [20 * 0.3048, 400 * 0.3048] # convert from feet to metres
 
 # Describe key SA charachteristics
 print("Key search area charachteristics:")
 for sa in searchAreas:
-    sDist = round(sa.center.magnitude(),2)
-    sArea = round(sa.area(),2)
-    print(" Search area of", sArea, "m2", sDist, "m from the origin")
-
-targetsPerSearchArea = 2
-altitudeLimits = [20 * 0.3048, 400 * 0.3048] # convert from feet to metres
+	sDist = round(sa.center.magnitude(),2)
+	sArea = round(sa.area(),2)
+	print(" Search area of", sArea, "m2", sDist, "m from the origin")
 
 targetSize = 2 # m, size=width=height
 overlapFactor = input("Enter overlap factor:") or 1 # defaults to 1...
@@ -238,6 +237,7 @@ print("Calculated capture field @", captureAlt, "m =", captureFieldRef.size(), "
 
 # tracking variables
 currentSearchArea = 0 # 0,1
+nwpCurrentSearchArea = 0 # set equal to currentSearchArea only when setWaypoint is called - used by camera simulation etc.
 searchAreaFoundTargets = [0] * searchAreaCount 	# count
 foundTargets = []
 numImagesProcessed = 0
@@ -252,11 +252,11 @@ ph = h - overlapRequired
 #print("Adjusted image field sizes for flight planning:", (pw, ph))
 # [TODO] may lead to duplicates when targets are at edge of images
 #			adjust recon.py to reject targets that are don't fit the target form
-# 			and command.py to identify and mark duplicates
+# 		and command.py to identify and mark duplicates
 
 # subdivide search area into capture rects
 if 1:  # [TODO] just for debugging - shows capture rects
-        # captureRects are of the smaller size, not including overlap so dont show it's effect when drawn
+	# captureRects are of the smaller size, not including overlap so dont show it's effect when drawn
 	captureRects = []
 	for sa in searchAreas:
 		rects = Rect2.packUniform(sa, ph, pw, 0)
@@ -286,7 +286,29 @@ for s in saRange:
 	# increment counter
 	numImagesPlanned += len(capturePoints)
 
+# For camera simulation only, pre-define the indices of the image(s) which will contain targets
+grassImage = "test-1cm-grass-fs.png"
+targetImages = ["test-1cm-text5-fs.png","test-1cm-text4-fs.png"]
+simTargetsPerImage = 2
+simImageHits = round(targetsPerSearchArea / simTargetsPerImage)
+simTargetIndices = [[]] * searchAreaCount  # a list of indices for each search area
+simImageNames= [[]] * searchAreaCount # a list of file names for each search area 
+for s in range(0, searchAreaCount):
+	simSANumImagesPlanned = len(saWaypoints[s])
+	simTargetIndices[s] = random.sample(range(0, simSANumImagesPlanned), simImageHits)
+	
+	# replace some indices with 'hit' images
+	simImageNames[s] = [grassImage] * simSANumImagesPlanned
+	for i in simTargetIndices[s]:
+		simImageNames[s][i] = random.choice(targetImages)
+
+print("Simulated image hits will occur at indices: ", simTargetIndices)
+# images will be 'popped' from the *beginning* of this list in the camera simulation logic
+
 print("Flight planning complete:", numImagesPlanned, "captures planned (max.)")
+
+# Interfaces
+# ----------
 
 # interface tracking variables
 nextWaypoint = tolWP
@@ -302,10 +324,10 @@ def getNextWaypoint():
 	saAllTargetsFound = saTargetsFound >= targetsPerSearchArea
 
 	# ending case
-        if nextWaypoint == tolWP and lastWaypoint != tolWP:
-                flightComplete = 1
-                strTime = round(getTime(),2)
-		print("Flight complete at", strTime)
+	if nextWaypoint == tolWP and lastWaypoint != tolWP:
+		flightComplete = 1
+		strTime = round(getTime(),2)
+		print("Flight complete at T+", strTime, "s")
 		return None
 
 	# move to next search area if ok
@@ -356,8 +378,8 @@ def checkMissionComplete():
 	# print("Checking if mission complete:", "AIC =", allImagesCaptured, "and ACIP =", allCapturedImagesProcessed)
 
 	if allImagesCaptured and allCapturedImagesProcessed:
-                sTime = round(getTime(),2)
-		print("Mission complete at", sTime, "- all", numImagesCaptured, "images captured and processed")
+		sTime = round(getTime(),2)
+		print("Mission complete at T+", sTime, "s - all", numImagesCaptured, "images captured and processed")
 
 		# [TODO] Summarise info
 		missionReport()
@@ -388,7 +410,9 @@ def getTime():
 # Image Handling
 # --------------
 
-ipWorkerCount = 1
+ipWorkerCount = 2 	# 2 seems to be a good number on RasPi with 18/05 software
+print("Image processing workers:", ipWorkerCount)
+
 capturedImages = []
 
 # setup workers
@@ -536,12 +560,16 @@ def updateRotation():
 		pass
 
 def setWaypoint(w):
+	global nwpCurrentSearchArea, currentSearchArea	
+	
 	if simulateFCInterface:
 		global nextWaypoint, lastWaypoint, lastWaypointSetTime
 
 		lastWaypoint = nextWaypoint
 		nextWaypoint = w
 		lastWaypointSetTime = getTime()
+		
+		nwpCurrentSearchArea = currentSearchArea
 	else:
 		pass
 
@@ -567,6 +595,8 @@ def onStableHoverAchieved():
 		pass
 
 def captureImage(position, heading):
+	global nwpCurrentSearchArea	
+	
 	# Returns an ImageCapture from the camera (or a simulation)
 	# Position is passed in to avoid a circular call on updateLocation
 
@@ -579,15 +609,8 @@ def captureImage(position, heading):
 	# Aperture: 		f/2.0
 	
 	if simulateCamera:
-		grassImage = "test-1cm-grass-fs.png"
-		targetImages = ["test-1cm-text5-fs.png","test-1cm-text4-fs.png"]
-		hitChance = 1 / 3
-
-		if random.random() < hitChance:
-			file = random.choice(targetImages)
-		else:
-			file = grassImage
-
+		print("  nwpCurrentSearchArea =", nwpCurrentSearchArea)
+		file = simImageNames[nwpCurrentSearchArea].pop(0) 	# 'pop' first item in SA-specific list
 		print("Image simulated:", file)
 
 		# Open image
@@ -614,7 +637,7 @@ pygame.init()
 size = width, height = 600, 600
 centre = Vector2(width, height) / 2
 scale = 0.5
-dt = 1/60
+dt = 1/30
 
 dirLength = 5
 
