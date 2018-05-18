@@ -435,9 +435,6 @@ def imageProcessed(future):
 	# free up memory (image saved in recon.py)
 	ci.image = None
 
-	# Check completeion
-	checkMissionComplete()
-
 	# if targets found in image
 	numTargetsFound = len(targetsDescriptor)
 	if numTargetsFound > 0:
@@ -468,7 +465,10 @@ def imageProcessed(future):
 		# the UAS will only move on from the SA when it reaches the next waypoint and has to set a next waypoint
 		# could instead check here also if the cap has been reached and trigger a setWaypoint somehow, to reduce
 		# flight time and have one less image to process
-
+		
+	# Check completeion
+	checkMissionComplete()
+	
 def imageCaptured(imageCap):
 	ciIndex = len(capturedImages)
 	ci = imageCap
@@ -609,7 +609,7 @@ def captureImage(position, heading):
 	# Aperture: 		f/2.0
 	
 	if simulateCamera:
-		print("  nwpCurrentSearchArea =", nwpCurrentSearchArea)
+		#print("  nwpCurrentSearchArea =", nwpCurrentSearchArea)
 		file = simImageNames[nwpCurrentSearchArea].pop(0) 	# 'pop' first item in SA-specific list
 		print("Image simulated:", file)
 
