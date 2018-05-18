@@ -8,6 +8,8 @@ from geometry import * # geometry.py
 from recon import * # recon.py
 import random
 import concurrent.futures
+from picamera import PiCamera
+import io
 
 # General Notes
 # 
@@ -190,6 +192,7 @@ inputSearchAreas = 0 # may be modified in createSearchAreas
 cruiseSpeed = 16
 captureAlt = 80
 fovS, fovP = 62.2, 48.8 	# https://www.raspberrypi.org/documentation/hardware/camera/README.md
+resH, resV = 3280, 2464
 
 # Define coordinates
 print(header("Coordinate Systems"))
@@ -287,28 +290,29 @@ for s in saRange:
 	numImagesPlanned += len(capturePoints)
 
 # For camera simulation only, pre-define the indices of the image(s) which will contain targets
-grassImage = "test-1cm-grass-fs.png"
-targetImages = ["test-1cm-text5-fs.png","test-1cm-text4-fs.png"]
-simTargetsPerImage = 2
-simImageHits = round(targetsPerSearchArea / simTargetsPerImage)
-simTargetIndices = [[]] * searchAreaCount  # a list of indices for each search area
-simImageNames= [[]] * searchAreaCount # a list of file names for each search area 
-for s in range(0, searchAreaCount):
-	simSANumImagesPlanned = len(saWaypoints[s])
-	simTargetIndices[s] = random.sample(range(0, simSANumImagesPlanned), simImageHits)
-	
-	# replace some indices with 'hit' images
-	simImageNames[s] = [grassImage] * simSANumImagesPlanned
-	for i in simTargetIndices[s]:
-		simImageNames[s][i] = random.choice(targetImages)
+if simulateCamera:
+	grassImage = "test-1cm-grass-fs.png"
+	targetImages = ["test-1cm-text5-fs.png","test-1cm-text4-fs.png"]
+	simTargetsPerImage = 2
+	simImageHits = round(targetsPerSearchArea / simTargetsPerImage)
+	simTargetIndices = [[]] * searchAreaCount  # a list of indices for each search area
+	simImageNames= [[]] * searchAreaCount # a list of file names for each search area 
+	for s in range(0, searchAreaCount):
+		simSANumImagesPlanned = len(saWaypoints[s])
+		simTargetIndices[s] = random.sample(range(0, simSANumImagesPlanned), simImageHits)
+		
+		# replace some indices with 'hit' images
+		simImageNames[s] = [grassImage] * simSANumImagesPlanned
+		for i in simTargetIndices[s]:
+			simImageNames[s][i] = random.choice(targetImages)
 
-print("Simulated image hits will occur at indices: ", simTargetIndices)
-# images will be 'popped' from the *beginning* of this list in the camera simulation logic
+	print("Simulated image hits will occur at indices: ", simTargetIndices)
+	# images will be 'popped' from the *beginning* of this list in the camera simulation logic
 
 print("Flight planning complete:", numImagesPlanned, "captures planned (max.)")
 
-# Interfaces
-# ----------
+# Mission Tracking
+# ----------------
 
 # interface tracking variables
 nextWaypoint = tolWP
@@ -491,6 +495,10 @@ def imageCaptured(imageCap):
 # Interfaces
 # ----------
 
+# Initialise camera
+camera = PiCamera()
+camera.resolution = resH, resV
+
 # external interfaces:
 # flight control (pixhawk)
 # - set waypoints
@@ -509,7 +517,15 @@ def fcRecieve(msg):
 	pass
 
 def camCapture():
-	pass
+	time.sleep(2) # must wait at least 2 seconds to allow camera to adjust to lighting
+
+	stream = io.BytesIO()
+	camera.capture(stream, format='jpeg')
+
+	# "rewind" the stream to the beginning so we can read its content
+	stream.seek(0)
+
+	return Image.open(stream)
 
 # Intermediary functions (including simulation)
 def updateLocation():
@@ -622,7 +638,7 @@ def captureImage(position, heading):
 		searchAreaIndex = currentSearchArea
 
 	else:
-		pass
+		return camCapture()
 
 	return ImageCapture(img, position, heading, altitude, pixelSize, searchAreaIndex)
 
