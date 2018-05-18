@@ -8,8 +8,10 @@ from geometry import * # geometry.py
 from recon import * # recon.py
 import random
 import concurrent.futures
-from picamera import PiCamera
 import io
+
+if sys.platform.startswith('linux'):
+	from picamera import PiCamera
 
 # General Notes
 # 
@@ -496,8 +498,9 @@ def imageCaptured(imageCap):
 # ----------
 
 # Initialise camera
-camera = PiCamera()
-camera.resolution = resH, resV
+if not simulateCamera:
+	camera = PiCamera()
+	camera.resolution = resH, resV
 
 # external interfaces:
 # flight control (pixhawk)

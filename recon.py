@@ -37,6 +37,7 @@ def logHeader(s):
 
 def clearDir(folder):
 	# Deletes everything inside a given directory
+	# leaves a single empty file to make sure git picks it up
 	# 'folder' appears to be a relative path - tested
 	# [https://stackoverflow.com/questions/185936/how-to-delete-the-contents-of-a-folder-in-python]
 
@@ -49,6 +50,9 @@ def clearDir(folder):
 	        elif os.path.isdir(file_path): shutil.rmtree(file_path)
 	    except Exception as e:
 	        print(e)
+
+	# create file
+	f = open(folder + "/dummy.txt","w+")
 
 def boundingSquareSize(w, a):
 	# in 2D space, returns the side length of an axis-aligned square that bounds a square of side length w rotated around its centre by an angle a in radians
