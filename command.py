@@ -22,7 +22,7 @@ import io
 # -----------------
 
 def header(s):
-		return "\n" + underline(s)
+	return "\n" + underline(s)
 
 def underline(s):
 	return s + "\n" + (len(s) * "-")

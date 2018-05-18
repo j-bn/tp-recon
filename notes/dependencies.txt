@@ -1,0 +1,10 @@
+git				pre-installed on RasPi
+Tesseract
+
+Python 3
+--------
+pygame
+Pillow (PIL)
+matplotlib
+numpy			comes with matplotlib?
+pytesseract
