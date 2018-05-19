@@ -11,7 +11,8 @@ import random
 import concurrent.futures
 import io
 
-if sys.platform.startswith('linux'):
+isLinux = sys.platform.startswith('linux')
+if isLinux:
 	from picamera import PiCamera
 
 # General Notes
@@ -104,6 +105,16 @@ def createSearchAreas(n):
 	else:
 		return randomSearchAreas(n)
 
+def overrideBoolInput(name, default):
+	ovr = input("Enter [Y/n] to override {}: ".format(name))
+	if ovr:
+		if ovr.lower() == 'y':
+			return 1
+		else:
+			return 0
+	else:
+		return default
+
 # Classes
 # -------
 
@@ -188,6 +199,7 @@ print("sys.platform = " + sys.platform)
 simulateFCInterface = 1
 simulateCamera = 1
 inputSearchAreas = 0 # may be modified in createSearchAreas
+enableDrawing = overrideBoolInput('enable drawing', 1)
 
 # System Parameters
 # -----------------
@@ -213,7 +225,7 @@ print("East  = E = 90 degrees = +ve X cartesian")
 
 # Setup GPS Locale
 # ----------------
-gpsOriginSource = input("Enter GPS origin source ['man', 'drone']:")
+gpsOriginSource = input("Enter GPS origin source ['man', 'drone']: ")
 if gpsOriginSource == 'man':
 	gpsOrigin = GPSPosition.fromInput()
 elif gpsOriginSource == 'drone':
@@ -249,10 +261,10 @@ for sa in searchAreas:
 	print(" Search area of", sArea, "m2", sDist, "m from the origin")
 
 targetSize = 2 # m, size=width=height
-overlapFactor = input("Enter overlap factor:") or 1 # defaults to 1...
+overlapFactor = float(input("Enter overlap factor: ") or 1) # defaults to 1...
 # - where a single target rotated to (worst case)
 # - 45 degrees and placed at the boundary between captures will appear only just fully in both images 
-overlapRequired = targetSize * 2**0.5 * overlapFactor
+overlapRequired = targetSize * overlapFactor * 2**0.5
 
 print("Overlap required:", round(overlapRequired, 2), "m")
 
@@ -392,6 +404,7 @@ def getNextWaypoint():
 
 	return closestWP
 
+print(header("Flight Log"))
 print("Initial waypoint:", nextWaypoint)
 
 # Mission completion check
@@ -523,7 +536,7 @@ def imageCaptured(imageCap):
 # ----------
 
 # Initialise camera
-if not simulateCamera:
+if isLinux:
 	camera = PiCamera()
 	camera.resolution = resH, resV
 
@@ -737,93 +750,97 @@ while 1:
 			elif event.button == 5: # scroll down
 				scale *= 0.9
 
-	# define world space features
-	loc = updateLocation()
-	forward = updateRotation() 	# must match positioning of camera on aircraft
-	captureField = captureFieldRef.alignedWith(forward) + loc
+	# draw
+	if enableDrawing:
 
-	# translate vectors to canvas space
-	cn = centre
-	lc = loc * scale + centre
-	nwd = None
-	lwd = None
-	if nextWaypoint:
-		nw = nextWaypoint.position * scale + centre
-		if nextWaypoint.heading:
-			nwd = nw + nextWaypoint.heading.normalized() * dirLength
-	if lastWaypoint:
-		lw = lastWaypoint.position * scale + centre
-		if lastWaypoint.heading:
-			lwd = lw + lastWaypoint.heading.normalized() * dirLength
+		# define world space features
+		loc = updateLocation()
+		forward = updateRotation() 	# must match positioning of camera on aircraft
+		captureField = captureFieldRef.alignedWith(forward) + loc
 
-	# translate rect to canvas space
-	cr = captureField * scale + centre 
+		# translate vectors to canvas space
+		cn = centre
+		lc = loc * scale + centre
+		nwd = None
+		lwd = None
+		if nextWaypoint:
+			nw = nextWaypoint.position * scale + centre
+			if nextWaypoint.heading:
+				nwd = nw + nextWaypoint.heading.normalized() * dirLength
+		if lastWaypoint:
+			lw = lastWaypoint.position * scale + centre
+			if lastWaypoint.heading:
+				lwd = lw + lastWaypoint.heading.normalized() * dirLength
 
-	# clear canvas
-	screen.fill(white)
+		# translate rect to canvas space
+		cr = captureField * scale + centre 
 
-	# draw axes
-	axesArrowSize = 2;
-	axesOffset = 5;
-	axesLength = 30;
+		# clear canvas
+		screen.fill(white)
+
+		# draw axes
+		axesArrowSize = 2;
+		axesOffset = 5;
+		axesLength = 30;
+		
+		pygame.draw.line(screen, black, (axesOffset, axesOffset), (axesOffset+axesLength, 	axesOffset)) 	#+x
+		pygame.draw.line(screen, black, (axesOffset+axesLength-axesArrowSize, axesOffset-axesArrowSize), (axesOffset+axesLength-axesArrowSize, axesOffset+axesArrowSize))
+		pygDrawText("x", black, (axesOffset+axesLength, axesOffset))
+		
+		pygame.draw.line(screen, black, (axesOffset, axesOffset), (axesOffset, axesOffset+axesLength)) 		#+y
+		pygame.draw.line(screen, black, (axesOffset-axesArrowSize, axesOffset+axesLength-axesArrowSize), (axesOffset+axesArrowSize, axesOffset+axesLength-axesArrowSize))
+		pygDrawText("y", black, (axesOffset, axesOffset+axesLength))
+
+		# draw debug text
+		pygDrawText("last: " + str(lastWaypoint), black, (20,20))
+		pygDrawText("next: " + str(nextWaypoint), black, (20,40))
+		pygDrawText("time: " + str(round(getTime(), 1)) + "s", black, (20,60))
+
+		# draw captured images
+		for ci in capturedImages:
+			pos = ci.position * scale + centre
+			pos2 = pos + ci.heading * 8
+			color = green if ci.processed else orange
+			pygame.draw.line(screen, color, pos.toPixel(), pos2.toPixel())
+
+		# draw found targets
+		for ft in foundTargets:
+			tp = ft.position * scale + centre
+			pygame.draw.circle(screen, red, tp.toPixel(), 3, 1)
+
+			# draw character
+			c = ft.character
+			t = c[0] if isinstance(c, list) else c
+			pygDrawText(t, red, tp.toPixel())
+
+		# draw search areas
+		for sa in searchAreas:
+			r = sa * scale + centre
+			pygDrawRect(r, darkBlue)
+
+		# draw capture rects
+		for rect in captureRects:
+			r = rect * scale + centre
+			pygDrawRect(r, pink)
+
+		# draw capture field
+		pygDrawRect(cr, red)
+
+		# mark origin
+		pygDrawOrigin(cn.toPixel(), 5, 6)
+
+		# draw points
+		pygame.draw.circle(screen, red, 	nw.toPixel(), 	5, 1)	# mark next waypoint
+		if nwd: 													# and heading
+			pygame.draw.line(screen, red, 	nw.toPixel(),	nwd.toPixel())
+
+		pygame.draw.circle(screen, blue, 	lw.toPixel(), 	5, 1)	# mark last waypoint
+		if lwd: 													# and heading
+			pygame.draw.line(screen, blue, 	lw.toPixel(),	lwd.toPixel())
+
+		pygame.draw.circle(screen, green, 	lc.toPixel(), 	3, 1)	# mark current position
 	
-	pygame.draw.line(screen, black, (axesOffset, axesOffset), (axesOffset+axesLength, 	axesOffset)) 	#+x
-	pygame.draw.line(screen, black, (axesOffset+axesLength-axesArrowSize, axesOffset-axesArrowSize), (axesOffset+axesLength-axesArrowSize, axesOffset+axesArrowSize))
-	pygDrawText("x", black, (axesOffset+axesLength, axesOffset))
-	
-	pygame.draw.line(screen, black, (axesOffset, axesOffset), (axesOffset, axesOffset+axesLength)) 		#+y
-	pygame.draw.line(screen, black, (axesOffset-axesArrowSize, axesOffset+axesLength-axesArrowSize), (axesOffset+axesArrowSize, axesOffset+axesLength-axesArrowSize))
-	pygDrawText("y", black, (axesOffset, axesOffset+axesLength))
+		# cycle frame
+		pygame.display.update()
 
-	# draw debug text
-	pygDrawText("last: " + str(lastWaypoint), black, (20,20))
-	pygDrawText("next: " + str(nextWaypoint), black, (20,40))
-	pygDrawText("time: " + str(round(getTime(), 1)) + "s", black, (20,60))
-
-	# draw captured images
-	for ci in capturedImages:
-		pos = ci.position * scale + centre
-		pos2 = pos + ci.heading * 8
-		color = green if ci.processed else orange
-		pygame.draw.line(screen, color, pos.toPixel(), pos2.toPixel())
-
-	# draw found targets
-	for ft in foundTargets:
-		tp = ft.position * scale + centre
-		pygame.draw.circle(screen, red, tp.toPixel(), 3, 1)
-
-		# draw character
-		c = ft.character
-		t = c[0] if isinstance(c, list) else c
-		pygDrawText(t, red, tp.toPixel())
-
-	# draw search areas
-	for sa in searchAreas:
-		r = sa * scale + centre
-		pygDrawRect(r, darkBlue)
-
-	# draw capture rects
-	for rect in captureRects:
-		r = rect * scale + centre
-		pygDrawRect(r, pink)
-
-	# draw capture field
-	pygDrawRect(cr, red)
-
-	# mark origin
-	pygDrawOrigin(cn.toPixel(), 5, 6)
-
-	# draw points
-	pygame.draw.circle(screen, red, 	nw.toPixel(), 	5, 1)	# mark next waypoint
-	if nwd: 													# and heading
-		pygame.draw.line(screen, red, 	nw.toPixel(),	nwd.toPixel())
-
-	pygame.draw.circle(screen, blue, 	lw.toPixel(), 	5, 1)	# mark last waypoint
-	if lwd: 													# and heading
-		pygame.draw.line(screen, blue, 	lw.toPixel(),	lwd.toPixel())
-
-	pygame.draw.circle(screen, green, 	lc.toPixel(), 	3, 1)	# mark current position
-
-	# cycle frame
-	pygame.display.update()
 	time.sleep(dt)
