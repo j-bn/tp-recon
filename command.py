@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 
+# Import modules etc.
 import time
 import sys
 import pygame
@@ -227,7 +228,14 @@ print("GPS locale set up at", gpsOrigin)
 # Mission Parameters
 # ------------------
 print(header("Mission Setup"))
-tolWP = Waypoint(Vector2(20,20), None, 0) # Take-off and landing
+
+# Set take-off and landing point
+if gpsOriginSource == 'drone':
+	tolWP = Waypoint(Vector2(0,0), None, 0) # at origin 
+else:
+	tolWP = Waypoint(Vector2(20,10), None, 0)
+
+print("TO/L waypoint:", tolWP)
 searchAreas = createSearchAreas(2)
 searchAreaCount = len(searchAreas)
 targetsPerSearchArea = 2
