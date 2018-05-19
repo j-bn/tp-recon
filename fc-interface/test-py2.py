@@ -1,4 +1,5 @@
 import sys
+import time
 
 n = 0
 
@@ -12,9 +13,11 @@ def count():
 
 # listen for input
 while 1:
-	cmd = input(">")
+	cmd = raw_input(">")
 
 	if cmd == "count":
 		count()
 	elif cmd == "exit":
 		sys.exit()
+	else:
+		print("Unkown cmd:", cmd)
