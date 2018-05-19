@@ -64,10 +64,10 @@ def frustrumFieldRect(alt, fovP, fovS):
 	return Rect2(pos, p, ar)
 
 def createSearchAreas(n):
-	global inputSearchAreas
+	global inputSearchAreas, gpsLocale
 	
 	if input("Type Y to force manual input:").lower() == "y":
-				inputSearchAreas = 1
+		inputSearchAreas = 1
 
 	if inputSearchAreas: # manually input search areas
 		print(underline("Search Area Setup"))
@@ -77,13 +77,22 @@ def createSearchAreas(n):
 
 		rects = [None] * n
 
+		coordMode = 'gps' if input(" Enter Y tp use spatial GPS coordinates:").lower() == "y" else 'cartesian'
+
 		for i in range(0,n):
 			print(" Search area #" + str(i+1))
-			cx = float(input(" Centre X coord (m) = "))
-			cy = float(input(" Centre Y coord (m) = "))
-			an = float(input(" Rotation (CW, deg) = "))
-			sp = float(input(" Full size 'width' in Primary axis (m) = "))
-			ss = float(input(" Full size 'height' in Secondary axis (m) = "))
+			print("  Centre position")
+			if coordMode == 'gps':
+				gps = GPSPosition.fromInput()
+				vec = gpsLocale.toVector(gps)
+				cx = vec.x
+				cy = vec.y
+			elif coordMode == 'cartesian':
+				cx = float(input("  X coord (m) = "))
+				cy = float(input("  Y coord (m) = "))
+			an = float(input("  Rotation (CW, deg) = "))
+			sp = float(input("  Full size 'width' in Primary axis (m) = "))
+			ss = float(input("  Full size 'height' in Secondary axis (m) = "))
 
 			center = Vector2(cx, cy)
 			size = Vector2(sp, ss)
@@ -201,6 +210,20 @@ print(header("Coordinate Systems"))
 print("North = N =  0 degrees = +ve Y cartesian")
 print("East  = E = 90 degrees = +ve X cartesian")
 
+# Setup GPS Locale
+# ----------------
+gpsOriginSource = input("Enter GPS origin source ['man', 'drone']:")
+if gpsOriginSource == 'man':
+	gpsOrigin = GPSPosition.fromInput()
+elif gpsOriginSource == 'drone':
+	pass
+	# [TODO] Use drone position when started
+else:
+	gpsOrigin = GPSPosition(51.242346, -0.590729)
+
+gpsLocale = GPSLocale(gpsOrigin)
+print("GPS locale set up at", gpsOrigin)
+
 # Mission Parameters
 # ------------------
 print(header("Mission Setup"))
@@ -224,12 +247,6 @@ overlapFactor = input("Enter overlap factor:") or 1 # defaults to 1...
 overlapRequired = targetSize * 2**0.5 * overlapFactor
 
 print("Overlap required:", round(overlapRequired, 2), "m")
-
-# Setup GPS Locale
-# ----------------
-gpsOrigin = GPSPosition(51.242346, -0.590729)
-gpsLocale = GPSLocale(gpsOrigin)
-print("GPS locale set up at", gpsOrigin)
 
 # Plan Flight
 # -----------

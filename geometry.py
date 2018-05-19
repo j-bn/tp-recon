@@ -267,6 +267,12 @@ class GPSPosition:
 		self.lat = lat
 		self.lon = lon
 
+	def fromInput():
+		print("  Enter GPS position (degrees)")
+		lat = float(input("   Lat:"))
+		lon = float(input("   Lon:"))
+		return GPSPosition(lat, lon)
+
 	def __str__(self):
 		# 1 degree = ~111m, so to achieve ~mm (0.001m) accuracy, GPS will have to be ~0.00001 deg (5dp)
 		return "(" + str(round(self.lat,5)) + "," + str(round(self.lon,5)) + ")"

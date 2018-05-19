@@ -106,3 +106,6 @@ venv.bak/
 # mypy
 .mypy_cache/
 *.sublime-workspace
+__pycache__/recon.cpython-36.pyc
+__pycache__/recon.cpython-36.pyc
+__pycache__/geometry.cpython-36.pyc
