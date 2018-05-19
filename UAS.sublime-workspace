@@ -4,12 +4,204 @@
 		"selected_items":
 		[
 			[
+				"random",
+				"randomSearchAreas"
+			],
+			[
+				"input",
+				"inputSearchAreas"
+			],
+			[
+				"searchArea",
+				"searchAreaIndex"
+			],
+			[
+				"file",
+				"fileName"
+			],
+			[
 				"target",
-				"targetsDescriptor"
+				"targetSize"
+			],
+			[
+				"found",
+				"foundTargets"
+			],
+			[
+				"mission",
+				"missionReport"
+			],
+			[
+				"shut",
+				"shutdownFlag"
+			],
+			[
+				"save",
+				"saveInputImageWithMetadata"
+			],
+			[
+				"all",
+				"allCapturedImagesProcessed"
+			],
+			[
+				"numI",
+				"numImagesCaptured"
+			],
+			[
+				"check",
+				"checkMissionComplete"
+			],
+			[
+				"num",
+				"numImagesProcessed"
+			],
+			[
+				"flight",
+				"flightComplete"
+			],
+			[
+				"capture",
+				"captureImage"
+			],
+			[
+				"capt",
+				"captureAlt"
+			],
+			[
+				"captu",
+				"captureAlt"
+			],
+			[
+				"aligned",
+				"alignedWith"
+			],
+			[
+				"update",
+				"updateRotation"
+			],
+			[
+				"next",
+				"nextWaypoint"
+			],
+			[
+				"Key",
+				"KEYDOWN"
+			],
+			[
+				"to",
+				"toPixel"
+			],
+			[
+				"world",
+				"worldPos"
+			],
+			[
+				"relPos",
+				"relPosWorld"
+			],
+			[
+				"normal",
+				"normalized"
+			],
+			[
+				"pyg",
+				"pygDrawText"
+			],
+			[
+				"circle",
+				"circleSize"
+			],
+			[
+				"pygDr",
+				"pygDrawOrigin"
+			],
+			[
+				"searc",
+				"searchAreaFoundTargets"
+			],
+			[
+				"sear",
+				"searchAreaFoundTargets"
+			],
+			[
+				"curr",
+				"currentSearchArea"
+			],
+			[
+				"curre",
+				"currentSearchAreaFoundTargets"
+			],
+			[
+				"curret",
+				"currentSearchArea"
+			],
+			[
+				"serar",
+				"searchAreaCount"
+			],
+			[
+				"get",
+				"getNextWaypoint"
+			],
+			[
+				"closes",
+				"closestWP"
+			],
+			[
+				"cur",
+				"curWaypoints"
+			],
+			[
+				"sa",
+				"saWaypoints"
+			],
+			[
+				"alt",
+				"altitude"
 			],
 			[
 				"targets",
-				"targetsPos"
+				"targetsFound"
+			],
+			[
+				"pixe",
+				"pixelSize"
+			],
+			[
+				"image",
+				"imageProcessed"
+			],
+			[
+				"enable",
+				"enableLogging"
+			],
+			[
+				"captured",
+				"capturedImages"
+			],
+			[
+				"pixel",
+				"pixelSize"
+			],
+			[
+				"process",
+				"processImage"
+			],
+			[
+				"shif",
+				"shift10EastGPS"
+			],
+			[
+				"orig",
+				"originToVToGPS"
+			],
+			[
+				"origin",
+				"originToV"
+			],
+			[
+				"gps",
+				"gpsOrigin"
 			],
 			[
 				"groupsPo",
@@ -28,10 +220,6 @@
 				"imgData"
 			],
 			[
-				"get",
-				"getpixel"
-			],
-			[
 				"cap",
 				"captureRects"
 			],
@@ -40,28 +228,12 @@
 				"returnCenters"
 			],
 			[
-				"capt",
-				"capturePoints"
-			],
-			[
 				"search",
 				"searchAreas"
 			],
 			[
-				"captu",
-				"captureField"
-			],
-			[
-				"update",
-				"updateRotation"
-			],
-			[
 				"norma",
 				"normalized"
-			],
-			[
-				"random",
-				"randomInUnitCircle"
 			],
 			[
 				"pygDraw",
@@ -74,10 +246,6 @@
 			[
 				"contS",
 				"contSizeP"
-			],
-			[
-				"pixe",
-				"pixels"
 			],
 			[
 				"groun",
@@ -154,10 +322,6 @@
 			[
 				"pix",
 				"pixelSize"
-			],
-			[
-				"pixel",
-				"pixelArea"
 			],
 			[
 				"green",
@@ -304,10 +468,6 @@
 				"profile-image"
 			],
 			[
-				"check",
-				"checkImageAspectRatios"
-			],
-			[
 				"sess",
 				"sessionSiteMode"
 			],
@@ -354,176 +514,25 @@
 			[
 				"brand-cust",
 				"brand-custom-1"
-			],
-			[
-				"ind",
-				"indicator-color"
-			],
-			[
-				"border-",
-				"border-color"
-			],
-			[
-				"indicator",
-				"indicator-padding-top"
-			],
-			[
-				"toggle",
-				"toggleClass\t.toggleClass()"
-			],
-			[
-				"text-",
-				"text-align"
-			],
-			[
-				"Interm",
-				"intermediary"
-			],
-			[
-				"brand-",
-				"brand-primary"
-			],
-			[
-				"bac",
-				"background"
-			],
-			[
-				"marg",
-				"margin"
-			],
-			[
-				"data-",
-				"data-color"
-			],
-			[
-				"panel-default",
-				"panel-default-border"
-			],
-			[
-				"navbar",
-				"navbar-triangle"
-			],
-			[
-				"siteM",
-				"siteModeExplicit"
-			],
-			[
-				"array_key",
-				"array_key_exists"
-			],
-			[
-				"scale",
-				"scaleFrequency"
-			],
-			[
-				"grap",
-				"graphSettings"
-			],
-			[
-				"log",
-				"logarithmicVelocity"
-			],
-			[
-				"pantone-",
-				"pantone-red"
-			],
-			[
-				"text",
-				"text-align"
-			],
-			[
-				"margin",
-				"margin-top"
-			],
-			[
-				"conta",
-				"container"
-			],
-			[
-				"age",
-				"ageInputChanged"
-			],
-			[
-				"primar",
-				"primary-color"
-			],
-			[
-				"color",
-				"colorOptions"
-			],
-			[
-				"customis",
-				"customiseModal"
-			],
-			[
-				"margi",
-				"margin-bottom"
-			],
-			[
-				"size",
-				"size-inner"
-			],
-			[
-				"custom",
-				"customiseModal"
-			],
-			[
-				"background",
-				"background-color"
-			],
-			[
-				"shadow",
-				"shadow-opacity"
-			],
-			[
-				"panel-",
-				"panel-depth-darkeness"
-			],
-			[
-				"panel-depth",
-				"panel-depth-darkeness"
-			],
-			[
-				"depth",
-				"depth-darkeness"
-			],
-			[
-				"singul",
-				"singular_name"
-			],
-			[
-				"navb",
-				"navbar-triangle"
-			],
-			[
-				"person",
-				"person-hover-rotate"
-			],
-			[
-				"sing",
-				"singular_name"
-			],
-			[
-				"heading",
-				"headingData"
-			],
-			[
-				"head",
-				"headingData"
-			],
-			[
-				"singu",
-				"singular_name"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
+			"file": "notes/dependencies.txt",
+			"settings":
+			{
+				"buffer_size": 132,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
 			"file": "recon.py",
 			"settings":
 			{
-				"buffer_size": 15643,
+				"buffer_size": 17770,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -532,43 +541,7 @@
 			"file": "command.py",
 			"settings":
 			{
-				"buffer_size": 5107,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "geometry.py",
-			"settings":
-			{
-				"buffer_size": 4823,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "geometry-test.py",
-			"settings":
-			{
-				"buffer_size": 1896,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "numpy-test.py",
-			"settings":
-			{
-				"buffer_size": 42,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "tesseract-test/test.bat",
-			"settings":
-			{
-				"buffer_size": 1110,
+				"buffer_size": 23816,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -582,7 +555,7 @@
 	"command_palette":
 	{
 		"height": 127.0,
-		"last_filter": "instal",
+		"last_filter": "",
 		"selected_items":
 		[
 			[
@@ -647,18 +620,30 @@
 	},
 	"expanded_folders":
 	[
-		"/C/Users/james/Dropbox/Projects/Python Projects/uas"
+		"/C/Users/james/Dropbox/Projects/Python Projects/uas",
+		"/C/Users/james/Dropbox/Projects/Python Projects/uas/notes"
 	],
 	"file_history":
 	[
+		"/C/Users/james/Dropbox/Projects/Python Projects/uas/command.py",
+		"/C/Users/james/Dropbox/Projects/Python Projects/uas/recon.py",
+		"/C/Users/james/Dropbox/Projects/Python Projects/uas/geometry.py",
+		"/C/Users/james/Dropbox/Projects/Python Projects/uas/geometry-test.py",
+		"/C/Users/james/Dropbox/Projects/Python Projects/uas/fc-interface/test-py2.py",
+		"/C/Users/james/Dropbox/Projects/Python Projects/uas/fc-interface/test-py3.py",
+		"/C/Users/james/Dropbox/Projects/Python Projects/uas/field",
+		"/C/Users/james/Dropbox/Projects/Python Projects/uas/230",
+		"/C/Users/james/Dropbox/Projects/Python Projects/uas/tesseract-test/test.bat",
+		"/C/Users/james/Dropbox/Projects/Python Projects/uas/memory-error-notes.txt",
+		"/C/Users/james/Dropbox/Projects/Python Projects/uas/flight-control-interface-info.py",
+		"/C/Users/james/Dropbox/Projects/Python Projects/uas/ocr-handover.py",
+		"/C/Users/james/Dropbox/Projects/Python Projects/uas/numpy-test.py",
 		"/C/Users/james/AppData/Local/Temp/scp36660/public_html/themes/anita-james/page.php",
 		"/C/Users/james/AppData/Local/Temp/scp25095/public_html/themes/anita-james/about.txt",
 		"/C/Users/james/AppData/Local/Temp/scp26516/httpdocs/theme/triangle-2015/index.twig",
-		"/C/Users/james/Dropbox/Projects/Python Projects/uas/geometry-test.py",
 		"/C/Users/james/Dropbox/Projects/Python Projects/uas/test-ocr.py",
 		"/C/Users/james/Dropbox/Projects/Python Projects/uas/vector.py",
 		"/C/Users/james/Dropbox/Projects/Python Projects/uas/bounding-square-test/rbs-test.js",
-		"/C/Users/james/Dropbox/Projects/Python Projects/uas/recon.py",
 		"/C/Users/james/Dropbox/Projects/Python Projects/uas/bounding-square-test/rbs-test.html",
 		"/C/Users/james/AppData/Local/Temp/scp52901/httpdocs/theme/triangle-2015/index.twig",
 		"/C/Users/james/Dropbox/Projects/Python Projects/uas/images/tests.txt",
@@ -767,22 +752,11 @@
 		"/C/WAMP/www/triangle-2.0/theme/triangle-2015/listing.twig",
 		"/C/WAMP/www/triangle-2.0/app/config/config.yml",
 		"/C/WAMP/www/triangle-2.0/app/config/contenttypes.yml",
-		"/C/WAMP/www/triangle-2.0/app/config/taxonomy.yml",
-		"/C/WAMP/www/triangle-2.0/theme/triangle-2015/_aa_content.twig",
-		"/C/WAMP/www/triangle-2.0/theme/triangle-2015/config.yml",
-		"/C/WAMP/www/triangle-2.0/theme/triangle-2015/record.twig",
-		"/C/WAMP/www/triangle-2.0/theme/triangle-2015/entry.twig",
-		"/C/WAMP/www/triangle-2.0/src/Controllers/Frontend_Email.php",
-		"/C/WAMP/www/triangle-2.0/theme/triangle-2015/index.twig",
-		"/C/WAMP/www/triangle-2.0/theme/triangle-2015/listing_resources.twig",
-		"/C/WAMP/www/triangle-2.0/theme/triangle-2015/_recordfooter.twig",
-		"/C/WAMP/www/triangle-2.0/theme/triangle-2015/_resource_mailto.twig",
-		"/C/WAMP/www/triangle-2.0/theme/triangle-2015/listing_entries.twig",
-		"/C/WAMP/www/triangle-2.0/theme/triangle-2015/_service_summary_panel.twig"
+		"/C/WAMP/www/triangle-2.0/app/config/taxonomy.yml"
 	],
 	"find":
 	{
-		"height": 23.0
+		"height": 40.0
 	},
 	"find_in_files":
 	{
@@ -799,6 +773,36 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"areas",
+			"getSearchAreas",
+			"rx",
+			"fileName",
+			"h,",
+			"h",
+			"simulateInterfaces",
+			"3",
+			"1",
+			"target",
+			"flightComplete",
+			"rot",
+			"key",
+			"8",
+			"10",
+			"45",
+			"9",
+			"currentSearchAreaFoundTargets",
+			"10",
+			"5",
+			"normalised",
+			"fovV",
+			"fovH",
+			"self",
+			"waypoints",
+			"print",
+			"rad",
+			"deg(",
+			"rad(",
+			"shift100East",
 			"save",
 			"ceil",
 			"img",
@@ -896,37 +900,7 @@
 			"scroll",
 			".page-header",
 			"Rabio",
-			"body",
-			"Body",
-			"book",
-			"BEGIN",
-			"record.datepublish",
-			"isYT",
-			"text-shadow",
-			"danger",
-			"1",
-			"danger",
-			"li",
-			"text",
-			"Text",
-			"text",
-			"Text",
-			"text",
-			"Text",
-			"text",
-			"Text",
-			"text",
-			"Text",
-			"text",
-			"people",
-			"150px",
-			"s",
-			"S",
-			"s",
-			", ",
-			"danger",
-			"1",
-			"10px"
+			"body"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -949,145 +923,30 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 2,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "recon.py",
+					"file": "notes/dependencies.txt",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 15643,
+						"buffer_size": 132,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								15375,
-								15375
+								132,
+								132
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 5826.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "command.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5107,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								921,
-								921
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python 3/Python3.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "geometry.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4823,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								225,
-								225
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "geometry-test.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1896,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								813,
-								612
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 84.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "numpy-test.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 42,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								42,
-								42
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
+							"auto_name": "",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -1097,31 +956,61 @@
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "tesseract-test/test.bat",
+					"buffer": 1,
+					"file": "recon.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1110,
+						"buffer_size": 17770,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1110,
-								1110
+								1295,
+								1295
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Batch File/Batch File.sublime-syntax"
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 62.0,
+						"translation.y": 6379.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "command.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 23816,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4491,
+								4491
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2430.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -1129,7 +1018,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 22.0
+		"height": 24.0
 	},
 	"input":
 	{
@@ -1166,7 +1055,7 @@
 	"project": "UAS.sublime-project",
 	"replace":
 	{
-		"height": 42.0
+		"height": 44.0
 	},
 	"save_all_on_build": true,
 	"select_file":
