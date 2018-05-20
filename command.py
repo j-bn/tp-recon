@@ -2,7 +2,7 @@
 # -*- encoding: utf-8 -*-
 
 # Import modules etc.
-import time
+import time, datetime
 import sys
 import pygame
 from geometry import * # geometry.py
@@ -24,6 +24,15 @@ if isLinux:
 
 # Utility functions
 # -----------------
+
+def exit():
+	sys.exit()
+
+def log(*objects):
+	# log(*objects, sep=' ', end='\n', file=sys.stdout, flush=False)
+
+	print(*objects) 				# to stdout
+	print(*objects, file=logFile) 	# to log file
 
 def header(s):
 	return "\n" + underline(s)
@@ -72,7 +81,7 @@ def createSearchAreas(n):
 		inputSearchAreas = 1
 
 	if inputSearchAreas: # manually input search areas
-		print(underline("Search Area Setup"))
+		log(underline("Search Area Setup"))
 
 		# [TODO] Handle multiple input formats
 		# [TODO] Handle GPS and cartesian input formats
@@ -82,8 +91,8 @@ def createSearchAreas(n):
 		coordMode = 'gps' if input(" Enter Y tp use spatial GPS coordinates:").lower() == "y" else 'cartesian'
 
 		for i in range(0,n):
-			print(" Search area #" + str(i+1))
-			print("  Centre position")
+			log(" Search area #" + str(i+1))
+			log("  Centre position")
 			if coordMode == 'gps':
 				gps = GPSPosition.fromInput()
 				vec = gpsLocale.toVector(gps)
@@ -100,7 +109,7 @@ def createSearchAreas(n):
 			size = Vector2(sp, ss)
 			rects[i] = Rect2.aabb(center, size).rotate(deg(an))
 
-		print(rects)
+		log(rects)
 		return rects
 	else:
 		return randomSearchAreas(n)
@@ -190,16 +199,20 @@ class FoundTarget:
 # Initial commands
 # ----------------
 
+# setup log file
+logFile = open('log.txt', 'w+') # also empties the file
+log('Log file set up at', datetime.datetime.now())
+
 # clear archive directory - will be re-populated by recon.py on processing of each image
 clearDir('out-archive')
 
 # check platform name
-print("sys.platform = " + sys.platform)
+log("sys.platform = " + sys.platform)
 
 simulateFCInterface = 1
 simulateCamera = 1
 inputSearchAreas = 0 # may be modified in createSearchAreas
-enableDrawing = overrideBoolInput('enable drawing', 1)
+enableDisplay = overrideBoolInput('enable drawing', 1) # headless mode
 
 # System Parameters
 # -----------------
@@ -219,9 +232,9 @@ fovS, fovP = 62.2, 48.8 	# https://www.raspberrypi.org/documentation/hardware/ca
 resH, resV = 3280, 2464
 
 # Define coordinates
-print(header("Coordinate Systems"))
-print("North = N =  0 degrees = +ve Y cartesian")
-print("East  = E = 90 degrees = +ve X cartesian")
+log(header("Coordinate Systems"))
+log("North = N =  0 degrees = +ve Y cartesian")
+log("East  = E = 90 degrees = +ve X cartesian")
 
 # Setup GPS Locale
 # ----------------
@@ -235,11 +248,11 @@ else:
 	gpsOrigin = GPSPosition(51.242346, -0.590729)
 
 gpsLocale = GPSLocale(gpsOrigin)
-print("GPS locale set up at", gpsOrigin)
+log("GPS locale set up at", gpsOrigin)
 
 # Mission Parameters
 # ------------------
-print(header("Mission Setup"))
+log(header("Mission Setup"))
 
 # Set take-off and landing point
 if gpsOriginSource == 'drone':
@@ -247,18 +260,18 @@ if gpsOriginSource == 'drone':
 else:
 	tolWP = Waypoint(Vector2(20,10), None, 0)
 
-print("TO/L waypoint:", tolWP)
+log("TO/L waypoint:", tolWP)
 searchAreas = createSearchAreas(2)
 searchAreaCount = len(searchAreas)
 targetsPerSearchArea = 2
 altitudeLimits = [20 * 0.3048, 400 * 0.3048] # convert from feet to metres
 
 # Describe key SA charachteristics
-print("Key search area charachteristics:")
+log("Key search area charachteristics:")
 for sa in searchAreas:
 	sDist = round(sa.center.magnitude(),2)
 	sArea = round(sa.area(),2)
-	print(" Search area of", sArea, "m2", sDist, "m from the origin")
+	log(" Search area of", sArea, "m2", sDist, "m from the origin")
 
 targetSize = 2 # m, size=width=height
 overlapFactor = float(input("Enter overlap factor: ") or 1) # defaults to 1...
@@ -266,16 +279,16 @@ overlapFactor = float(input("Enter overlap factor: ") or 1) # defaults to 1...
 # - 45 degrees and placed at the boundary between captures will appear only just fully in both images 
 overlapRequired = targetSize * overlapFactor * 2**0.5
 
-print("Overlap required:", round(overlapRequired, 2), "m")
+log("Overlap required:", round(overlapRequired, 2), "m")
 
 # Plan Flight
 # -----------
-print(header("Flight Planning"))
+log(header("Flight Planning"))
 # image height 'up' is considered in the aircraft 'forward' direction, but may be more than width
 captureFieldRef = frustrumFieldRect(captureAlt, rad(fovP), rad(fovS)) # unrotated, unpositioned - relative to the aircraft in both position and orientation
 w, h = captureFieldRef.width(), captureFieldRef.height()
 
-print("Calculated capture field @", captureAlt, "m =", captureFieldRef.size(), "m")
+log("Calculated capture field @", captureAlt, "m =", captureFieldRef.size(), "m")
 
 # tracking variables
 currentSearchArea = 0 # 0,1
@@ -291,7 +304,7 @@ shutdownFlag = 0
 # adjust image sizes for flight planning (approximating overlap)
 pw = w - overlapRequired
 ph = h - overlapRequired
-#print("Adjusted image field sizes for flight planning:", (pw, ph))
+#log("Adjusted image field sizes for flight planning:", (pw, ph))
 # [TODO] may lead to duplicates when targets are at edge of images
 #			adjust recon.py to reject targets that are don't fit the target form
 # 		and command.py to identify and mark duplicates
@@ -306,12 +319,12 @@ if 1:  # [TODO] just for debugging - shows capture rects
 		
 	# test actual overlap
 	# (compares distance between capture points to *real* image field size)
-	print("Actual calculated overlap:\n correct number below should be just greater than root2 * target width = 2.83 for competition")
+	log("Actual calculated overlap:\n correct number below should be just greater than root2 * target width = 2.83 for competition")
 	a = captureRects[0]
 	b = captureRects[1]
 	centreDist = (a.center - b.center).magnitude()
-	print(" Overlap by width:",  round(w - centreDist, 2), "m")
-	print(" Overlap by height:", round(h - centreDist, 2), "m")
+	log(" Overlap by width:",  round(w - centreDist, 2), "m")
+	log(" Overlap by height:", round(h - centreDist, 2), "m")
 
 # define search area waypoints
 saWaypoints = [[]] * searchAreaCount
@@ -345,10 +358,10 @@ if simulateCamera:
 		for i in simTargetIndices[s]:
 			simImageNames[s][i] = random.choice(targetImages)
 
-	print("Simulated image hits will occur at indices: ", simTargetIndices)
+	log("Simulated image hits will occur at indices: ", simTargetIndices)
 	# images will be 'popped' from the *beginning* of this list in the camera simulation logic
 
-print("Flight planning complete:", numImagesPlanned, "captures planned (max.)")
+log("Flight planning complete:", numImagesPlanned, "captures planned (max.)")
 
 # Mission Tracking
 # ----------------
@@ -370,21 +383,21 @@ def getNextWaypoint():
 	if nextWaypoint == tolWP and lastWaypoint != tolWP:
 		flightComplete = 1
 		strTime = round(getTime(),2)
-		print("Flight complete at T+", strTime, "s")
+		log("Flight complete at T+", strTime, "s")
 		return None
 
 	# move to next search area if ok
 	if saSweepComplete or saTargetsFound:
-		print("Leaving search area:", ("sweep complete" if saSweepComplete else "all targets found"))
+		log("Leaving search area:", ("sweep complete" if saSweepComplete else "all targets found"))
 
 		if saIsLast:
 			rtbInitiated = 1
-			print("Returning to base")
+			log("Returning to base")
 			return tolWP
 		else:
 			currentSearchArea += 1
 			searchAreaFoundTargets[currentSearchArea] = 0
-			print("Proceeding to search area #" + str(currentSearchArea + 1))
+			log("Proceeding to search area #" + str(currentSearchArea + 1))
 
 	# proceed with search area, regardless of if it has changed
 	curWaypoints = saWaypoints[currentSearchArea]
@@ -400,12 +413,15 @@ def getNextWaypoint():
 			dClosest = d
 
 	closestWP = curWaypoints.pop(iClosest)
-	print("Waypoint popped:", closestWP)
+	log("Waypoint popped:", closestWP)
 
 	return closestWP
 
-print(header("Flight Log"))
-print("Initial waypoint:", nextWaypoint)
+# Wait before beginning
+input("Press enter to start flight...")
+
+log(header("Flight Log"))
+log("Initial waypoint:", nextWaypoint)
 
 # Mission completion check
 # used because theoretically this could be found in two ways
@@ -419,18 +435,18 @@ def checkMissionComplete():
 	numImagesCaptured = len(capturedImages)
 	allCapturedImagesProcessed = numImagesCaptured == numImagesProcessed
 
-	# print("Checking if mission complete:", "AIC =", allImagesCaptured, "and ACIP =", allCapturedImagesProcessed)
+	# log("Checking if mission complete:", "AIC =", allImagesCaptured, "and ACIP =", allCapturedImagesProcessed)
 
 	if allImagesCaptured and allCapturedImagesProcessed:
 		sTime = round(getTime(),2)
-		print("Mission complete at T+", sTime, "s - all", numImagesCaptured, "images captured and processed")
+		log("Mission complete at T+", sTime, "s - all", numImagesCaptured, "images captured and processed")
 
 		# [TODO] Summarise info
 		missionReport()
 
-		print("")
+		log("")
 		input("Press enter to shutdown:")
-		print("Shutting down...")
+		log("Shutting down...")
 		shutdownFlag = 1 # checkMissionComplete can be called by a thread callback, so exit needs to be called elsewhere
 
 # Summarise, report and save mission data
@@ -443,7 +459,7 @@ def missionReport():
 	for target in foundTargets:
 		report += strTarget(target) + "\n"
 
-	print(report)
+	log(report)
 
 # time
 bootTime = time.clock()
@@ -455,11 +471,11 @@ def getTime():
 # --------------
 
 ipWorkerCount = 2 	# 2 seems to be a good number on RasPi with 18/05 software
-print("Image processing workers:", ipWorkerCount)
+log("Image processing workers:", ipWorkerCount)
 
 capturedImages = []
 
-# setup workers
+# Setup workers
 executor = concurrent.futures.ThreadPoolExecutor(max_workers=ipWorkerCount)
 
 def imageProcessed(future):
@@ -474,7 +490,7 @@ def imageProcessed(future):
 
 	numImagesProcessed += 1
 	numImagesCaptured = len(capturedImages)
-	print("Image", ciIndex, "processed", "(", numImagesProcessed, "/", numImagesCaptured, ")")
+	log("Image", ciIndex, "processed", "(", numImagesProcessed, "/", numImagesCaptured, ")")
 
 	# free up memory (image saved in recon.py)
 	ci.image = None
@@ -482,7 +498,7 @@ def imageProcessed(future):
 	# if targets found in image
 	numTargetsFound = len(targetsDescriptor)
 	if numTargetsFound > 0:
-		print(" Target(s) found in image:", len(targetsDescriptor))
+		log(" Target(s) found in image:", len(targetsDescriptor))
 
 		# image constants
 		hdg = ci.heading.normalized()
@@ -499,7 +515,7 @@ def imageProcessed(future):
 			ft = FoundTarget(worldPos, td[0])
 			foundTargets.append(ft)
 
-			print(" ", ft)
+			log(" ", ft)
 
 		# important to use search area index at time of capture 
 		saIndex = ci.searchAreaIndex
@@ -517,7 +533,7 @@ def imageCaptured(imageCap):
 	ciIndex = len(capturedImages)
 	ci = imageCap
 
-	print("Image", ciIndex, "captured, submitting to processing pool...")
+	log("Image", ciIndex, "captured, submitting to processing pool...")
 
 	meta =  		"ID" + str(ciIndex)
 	meta += "\n" + 	"Search Area #" 										+ str(ci.searchAreaIndex)
@@ -631,7 +647,7 @@ def setWaypoint(w):
 		pass
 
 def onStableHoverAchieved():
-	print("Reached waypoint")
+	log("Reached waypoint")
 
 	if simulateFCInterface:
 		nwp = getNextWaypoint()
@@ -666,9 +682,9 @@ def captureImage(position, heading):
 	# Aperture: 		f/2.0
 	
 	if simulateCamera:
-		#print("  nwpCurrentSearchArea =", nwpCurrentSearchArea)
+		#log("  nwpCurrentSearchArea =", nwpCurrentSearchArea)
 		file = simImageNames[nwpCurrentSearchArea].pop(0) 	# 'pop' first item in SA-specific list
-		print("Image simulated:", file)
+		log("Image simulated:", file)
 
 		# Open image
 		img = Image.open("test-images/" + file)
@@ -686,49 +702,50 @@ def captureImage(position, heading):
 # Initialize Display
 # ------------------
 
-#setWaypoint(np.array([5,10]))
+dt = 1/30 if enableDisplay else 1/5
 
-# pygame display
-pygame.init()
+if enableDisplay:
 
-size = width, height = 600, 600
-centre = Vector2(width, height) / 2
-scale = 0.5
-dt = 1/30
+	# pygame display
+	pygame.init()
 
-dirLength = 5
+	size = width, height = 600, 600
+	centre = Vector2(width, height) / 2
+	scale = 0.5
 
-red = (255,0,0)
-green = (0,255,0)
-blue = (0,0,255)
-darkBlue = (0,0,128)
-white = (255,255,255)
-black = (0,0,0)
-pink = (255,200,200)
-orange = (255,128,0)
+	dirLength = 5
 
-screen = pygame.display.set_mode(size)
+	red = (255,0,0)
+	green = (0,255,0)
+	blue = (0,0,255)
+	darkBlue = (0,0,128)
+	white = (255,255,255)
+	black = (0,0,0)
+	pink = (255,200,200)
+	orange = (255,128,0)
 
-# Functions
-def exit():
-	sys.exit()
+	screen = pygame.display.set_mode(size)
 
-def pygDrawRect(rect, color=(255,255,255)):
-	corners = []
-	for i in range(1,5): # 1-4
-		corners.append(rect.corner(i).toPixel())
+	# Functions
+	def pygDrawRect(rect, color=(255,255,255)):
+		corners = []
+		for i in range(1,5): # 1-4
+			corners.append(rect.corner(i).toPixel())
 
-	pygame.draw.lines(screen, color, 1, corners) 	# rectangle
+		pygame.draw.lines(screen, color, 1, corners) 	# rectangle
 
-def pygDrawOrigin(pos, circleSize, crossSize):
-	pygame.draw.circle(screen, black, pos, circleSize, 1)
-	pygame.draw.line  (screen, black, (pos[0],pos[1]-crossSize), (pos[0],pos[1]+crossSize))
-	pygame.draw.line  (screen, black, (pos[0]-crossSize,pos[1]), (pos[0]+crossSize,pos[1]))
+	def pygDrawOrigin(pos, circleSize, crossSize):
+		pygame.draw.circle(screen, black, pos, circleSize, 1)
+		pygame.draw.line  (screen, black, (pos[0],pos[1]-crossSize), (pos[0],pos[1]+crossSize))
+		pygame.draw.line  (screen, black, (pos[0]-crossSize,pos[1]), (pos[0]+crossSize,pos[1]))
 
-font = pygame.font.SysFont('Helvetica', 13)
-def pygDrawText(text, color, pos):
-	textsurface = font.render(text, False, color)
-	screen.blit(textsurface, pos)
+	font = pygame.font.SysFont('Helvetica', 13)
+	def pygDrawText(text, color, pos):
+		textsurface = font.render(text, False, color)
+		screen.blit(textsurface, pos)
+
+# Sim/Display Loop
+# ----------------
 
 while 1:
 
@@ -738,24 +755,27 @@ while 1:
 		# sys.exit is better practice than exit or quit
 		# [https://stackoverflow.com/questions/19747371/python-exit-commands-why-so-many-and-when-should-each-be-used/19747562]
 	
-	# handle events
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT: exit() # handle window close
-		elif event.type == pygame.KEYDOWN:
-			if event.key == pygame.K_ESC:
-				exit()
-		elif event.type == pygame.MOUSEBUTTONDOWN:
-			if event.button == 4: # scroll up
-				scale *= 1.1
-			elif event.button == 5: # scroll down
-				scale *= 0.9
+	# simulated waypoint tracking relies on regual polling of variables
+	# so these must be called regardless of enableDisplay
+	loc = updateLocation()
+	forward = updateRotation() 	# must match positioning of camera on aircraft
 
-	# draw
-	if enableDrawing:
+	# Display
+	if enableDisplay:
+
+		# handle events
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT: exit() # handle window close
+			elif event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_ESC:
+					exit()
+			elif event.type == pygame.MOUSEBUTTONDOWN:
+				if event.button == 4: # scroll up
+					scale *= 1.1
+				elif event.button == 5: # scroll down
+					scale *= 0.9
 
 		# define world space features
-		loc = updateLocation()
-		forward = updateRotation() 	# must match positioning of camera on aircraft
 		captureField = captureFieldRef.alignedWith(forward) + loc
 
 		# translate vectors to canvas space

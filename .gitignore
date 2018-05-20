@@ -113,3 +113,4 @@ __pycache__/recon.cpython-36.pyc
 __pycache__/geometry.cpython-36.pyc
 out/image*
 out-archive/image*
+log.txt
