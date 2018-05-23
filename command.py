@@ -1,6 +1,13 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 
+"""
+command.py: The main script of the reconnaissance system, incorporating aircraft guidance; image handling; and interface abstraction.
+Part of the reconnaissance system for Team Peryton's (University of Surrey) entry to the IMechE's 2018 UAS Competition.
+"""
+
+__author__ = "James Thornton"
+
 # Import modules etc.
 import time, datetime
 import sys
@@ -10,6 +17,7 @@ from recon import * # recon.py
 import random
 import concurrent.futures
 import io
+from fcinterfacedev.dronekit_interface import FCInterface
 
 isLinux = sys.platform.startswith('linux')
 if isLinux:
@@ -209,8 +217,8 @@ clearDir('out-archive')
 # check platform name
 log("sys.platform = " + sys.platform)
 
-simulateFCInterface = 1
-simulateCamera = 1
+simulateFCInterface = overrideBoolInput('simulate FC interface', 1)
+simulateCamera = overrideBoolInput('simulate camera', 1)
 inputSearchAreas = 0 # may be modified in createSearchAreas
 enableDisplay = overrideBoolInput('enable drawing', 1) # headless mode
 
@@ -556,6 +564,11 @@ if isLinux:
 	camera = PiCamera()
 	camera.resolution = resH, resV
 
+# Initialise FC interface
+if not simulateFCInterface:
+	fcInterface = FCInterface()
+	fcInterface.connection()
+
 # external interfaces:
 # flight control (pixhawk)
 # - set waypoints
@@ -567,12 +580,6 @@ if isLinux:
 # - other camera protocols e.g. MIPI CSI-2
 
 # External calls
-def fcRequest(param):
-	pass
-
-def fcRecieve(msg):
-	pass
-
 def camCapture():
 	time.sleep(2) # must wait at least 2 seconds to allow camera to adjust to lighting
 

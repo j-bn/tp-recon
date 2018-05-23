@@ -1,6 +1,13 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 
+"""
+recon.py: Applies custom context-specific computer target recognition algorithms to images.
+Part of the reconnaissance system for Team Peryton's (University of Surrey) entry to the IMechE's 2018 UAS Competition.
+"""
+
+__author__ = "James Thornton"
+
 from __future__ import print_function
 import os, sys
 import shutil

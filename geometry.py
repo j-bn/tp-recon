@@ -1,6 +1,13 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 
+"""
+geometry.py: Provides a library for 2D and GPS gemetric operations.
+Part of the reconnaissance system for Team Peryton's (University of Surrey) entry to the IMechE's 2018 UAS Competition.
+"""
+
+__author__ = "James Thornton"
+
 import math, random
 
 # Constants
