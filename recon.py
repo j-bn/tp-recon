@@ -15,8 +15,11 @@ import numpy
 import math
 # import colorsys
 from PIL import Image, ImageOps
-from matplotlib import pyplot as plt, image as mplimg
 import pytesseract
+
+# import MatPlotLib if available
+if sys.platform.startswith('win'):
+	from matplotlib import pyplot as plt, image as mplimg
 
 # tesseract installed from https://github.com/UB-Mannheim/tesseract/wiki (3.05...) on windows
 if sys.platform.startswith('win'):
