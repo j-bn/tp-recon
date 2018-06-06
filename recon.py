@@ -8,7 +8,7 @@ Part of the reconnaissance system for Team Peryton's (University of Surrey) entr
 
 __author__ = "James Thornton"
 
-from __future__ import print_function
+# from __future__ import print_function
 import os, sys
 import shutil
 import numpy

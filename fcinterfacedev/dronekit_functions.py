@@ -82,7 +82,9 @@ def getAltitude():
 def setWaypoint(position):
     lat, lon, alt = position
     # convert to integers as input is string
-    lat = int(lat), lon = int(lon), alt = int(alt)
+    lat = int(lat)
+    lon = int(lon)
+    alt = int(alt)
     # converts to co-ord system relative to home point
     point = LocationGlobalRelative(lat,lon,alt)
     vehicle.simple_goto(point)
