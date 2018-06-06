@@ -10,6 +10,8 @@ Passes and recieves strings from dronekit_functions which interacts with droneki
 import subprocess
 import sys
 
+print("FCI-I started with Py", sys.version)
+
 class FCInterface:
 
     def __init__(self):

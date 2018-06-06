@@ -10,7 +10,6 @@ from dronekit import connect, Command, LocationGlobal
 from pymavlink import mavutil
 import time, sys, argparse, math
 
-
 def connection():
     # literally no clue what these 5 lines do but it might be needed but actually probably not
     # Parse connection argument
@@ -19,6 +18,8 @@ def connection():
     args = parser.parse_args()
     if args.connect:
         connection_string = args.connect
+    
+	print("FCI-F started with Py", sys.version)    
     
     # Connect to the Vehicle
     print("Connecting")
@@ -160,7 +161,9 @@ def onActionCompleted(fn):
 
 while 1:
     # looks for command and optional arguments 
-    cmd, *args = raw_input(">").split()
+    args = raw_input("FCI-F >").split()
+    cmd = args.pop(0)
+    
     if cmd == "connection":
         connection()
     if cmd == "getHeading":
