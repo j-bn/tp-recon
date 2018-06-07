@@ -42,7 +42,9 @@ def log(*objects):
 	# log(*objects, sep=' ', end='\n', file=sys.stdout, flush=False)
 
 	print(*objects) 				# to stdout
-	print(*objects, file=logFile) 	# to log file
+
+	if logFile:
+		print(*objects, file=logFile) 	# to log file
 
 def header(s):
 	return "\n" + underline(s)
@@ -252,8 +254,7 @@ gpsOriginSource = input("Enter GPS origin source ['man', 'drone']: ")
 if gpsOriginSource == 'man':
 	gpsOrigin = GPSPosition.fromInput()
 elif gpsOriginSource == 'drone':
-	pass
-	# [TODO] Use drone position when started
+	gpsOrigin = fcGetGPSLoc()
 else:
 	gpsOrigin = GPSPosition(51.242346, -0.590729)
 
@@ -594,6 +595,10 @@ def camCapture():
 
 	return Image.open(stream)
 
+def fcGetGPSLoc():
+	lat, lon = fcInterface.getPosition()
+	return GPSPosition(lat, lon)
+
 # Intermediary functions (including simulation)
 def updateLocation():
 	if simulateFCInterface:
@@ -623,8 +628,7 @@ def updateLocation():
 
 		return v
 	else:
-		lat, lon = fcInterface.getPosition()
-		gpsPos = GPSPosition(lat, lon)
+		gpsPos = fcGetGPSLoc()
 		return gpsLocale.toVector(gpsPos)
 
 def updateRotation():

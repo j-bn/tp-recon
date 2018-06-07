@@ -17,12 +17,14 @@ class FCInterface:
     def __init__(self):
         moduleFolder = 'fcinterfacedev/'
         isLinux = sys.platform.startswith('linux')
-        pyCommand = 'python2' if isLinux else 'python'
+        pyCommand = 'python2' # if isLinux else 'python'
 
         # opens cli running python2 dronekit functions
         self.py2 = subprocess.Popen([pyCommand, '-u', moduleFolder + 'dronekit_functions.py'], stdout=subprocess.PIPE, stdin=subprocess.PIPE, universal_newlines=True)
 
         print("FCInterface initialised")
+        print("Initial output:", self.py2.stdout.readline())
+
 
     def interface(self, command):
         """
@@ -30,12 +32,12 @@ class FCInterface:
         returns single line string resulting from function. When DONE is passed function is considered complete and 
         script moves on.
         """
-        print('writing')
+        print('FCI-I writing: ' + command)
         self.py2.stdin.write(command + '\n')
         self.py2.stdin.flush()
-        print('reading')
+        print('FCI-I reading...')
         line = 0
-        for i in range(0,100):
+        for i in range(0,20):
             # keeps last line printed
             cmdreturn = line
             

@@ -3,21 +3,25 @@
 
 #!/usr/bin/env python3
 import subprocess
+import sys
 
-print("Started py3 script")
+print("Started py3 script: " + sys.version)
 
 # -u for unbuffered output
-cmd = "python -u test-py2.py"  # launch python2 script using bash
+cmd = "python2 -u pyx-test-py2.py"  # launch python2 script using bash
 
-process = subprocess.Popen(cmd.split(), stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+# universal_newlines = 1 seems to negate using bytes to transmit data
+process = subprocess.Popen(cmd.split(), stdin=subprocess.PIPE, stdout=subprocess.PIPE, universal_newlines = 1)
+
+print("Py2 output: '", process.stdout.readline() + "'")
 
 def countWrapper():
-	process.stdin.write(b'count\n')
+	process.stdin.write('count\n')
 	process.stdin.flush()
 	print("reading...")
 	output = process.stdout.readline() 	# each command in test-py2.py must be met with a single line response for this to work
 	print("Py2 output: ", output)
 
 while 1:
-	input(">")
+	input("P3>")
 	countWrapper()
