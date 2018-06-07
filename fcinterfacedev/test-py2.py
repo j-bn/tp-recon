@@ -13,7 +13,7 @@ def count():
 
 # listen for input
 while 1:
-	cmd = raw_input(">")
+	cmd = input(">")
 
 	if cmd == "count":
 		count()

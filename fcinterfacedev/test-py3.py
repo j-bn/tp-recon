@@ -7,7 +7,7 @@ import subprocess
 print("Started py3 script")
 
 # -u for unbuffered output
-cmd = "python2 -u test-py2.py"  # launch python2 script using bash
+cmd = "python -u test-py2.py"  # launch python2 script using bash
 
 process = subprocess.Popen(cmd.split(), stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 

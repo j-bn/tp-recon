@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/bin/env python2.7
 # -*- encoding: utf-8 -*-
 
 """
@@ -23,12 +23,14 @@ isLinux = sys.platform.startswith('linux')
 if isLinux:
 	from picamera import PiCamera
 
+pyVersion = sys.version
+print("command.py running on Py", pyVersion)
+
 # General Notes
 # 
 # Arturo: UAS will fly somewhat like a aeroplane - keeping heading roughly in line with velocity
 # 		probably can't give a waypoint a heading, but can set heading after arrival
 # 		(UAS can yaw on the spot by using counter-rotating motors)
-
 
 # Utility functions
 # -----------------
@@ -85,8 +87,7 @@ def frustrumFieldRect(alt, fovP, fovS):
 def createSearchAreas(n):
 	global inputSearchAreas, gpsLocale
 	
-	if input("Type Y to force manual input:").lower() == "y":
-		inputSearchAreas = 1
+	inputSearchAreas = overrideBoolInput('manual SA input', inputSearchAreas)
 
 	if inputSearchAreas: # manually input search areas
 		log(underline("Search Area Setup"))
@@ -130,6 +131,7 @@ def overrideBoolInput(name, default):
 		else:
 			return 0
 	else:
+		#print('defaulted to ' + str(default), end='')
 		return default
 
 # Classes
@@ -568,6 +570,7 @@ if isLinux:
 if not simulateFCInterface:
 	fcInterface = FCInterface()
 	fcInterface.connection()
+	fcInterface.onActionCompleted(onStableHoverAchieved) # set 
 
 # external interfaces:
 # flight control (pixhawk)
@@ -620,7 +623,9 @@ def updateLocation():
 
 		return v
 	else:
-		pass
+		lat, lon = fcInterface.getPosition()
+		gpsPos = GPSPosition(lat, lon)
+		return gpsLocale.toVector(gpsPos)
 
 def updateRotation():
 	# returns the forward vector of the aircraft
@@ -637,7 +642,8 @@ def updateRotation():
 		return d
 
 	else:
-		pass
+		bearing = fcInterface.getHeading()  # returns heading in degress from North
+		return Vector2.angleVector(bearing)
 
 def setWaypoint(w):
 	global nwpCurrentSearchArea, currentSearchArea	
@@ -650,29 +656,31 @@ def setWaypoint(w):
 		lastWaypointSetTime = getTime()
 		
 		nwpCurrentSearchArea = currentSearchArea
+
 	else:
-		pass
+		gpsPos = gpsLocale.toGPS(w.position)
+		heading = w.heading
+		altitude = w.altitude 
+		fcInterface.setWaypoint(gpsPos.lat, gpsPos.lon, altitude)
+		# [TODO] set heading
 
 def onStableHoverAchieved():
 	log("Reached waypoint")
 
-	if simulateFCInterface:
-		nwp = getNextWaypoint()
+	nwp = getNextWaypoint()
 
-		if nwp:
-			# capture image
-			curAlt = nextWaypoint.altitude
-			if getTime() > 1 and curAlt == captureAlt: # dont capture at initial waypoint
-				capPos = nextWaypoint.position
-				capRot = Vector2.snap(updateRotation(), nextWaypoint.heading)
-				ic = captureImage(capPos, capRot)
-				imageCaptured(ic)
+	if nwp:
+		# capture image
+		curAlt = nextWaypoint.altitude
+		if getTime() > 1 and curAlt == captureAlt: # dont capture at initial waypoint
+			capPos = nextWaypoint.position
+			capRot = Vector2.snap(updateRotation(), nextWaypoint.heading)
+			ic = captureImage(capPos, capRot)
+			imageCaptured(ic)
 
-		# set next waypoint
-		setWaypoint(nwp)
-		#setWaypoint(Vector2.randomInUnitCircle() * 15)
-	else:
-		pass
+	# set next waypoint
+	setWaypoint(nwp)
+	#setWaypoint(Vector2.randomInUnitCircle() * 15)
 
 def captureImage(position, heading):
 	global nwpCurrentSearchArea	
