@@ -57,10 +57,8 @@ def connection():
 			time.sleep(0.2)
 	print "\n Home location: %s" % vehicle.home_location
 	
-	
 	# Copter should arm in GUIDED mode
 	vehicle.mode    = VehicleMode("GUIDED")
-
 
 	# Sanity Checks
 	print " Type: %s" % vehicle._vehicle_type
@@ -72,7 +70,7 @@ def connection():
 	print " Home Location: %s" % str(vehicle.home_location)
 	
 	# set parameters
-	vehicle.parameters['WP_YAW_BEHAVIOR']=0
+	vehicle.parameters['WP_YAW_BEHAVIOR'] = 0
 	
 	# completes command
 	print'DONE'
@@ -85,16 +83,16 @@ def getPosition():
 	lat = float(vehicle.location.global_frame.lat)
 	lon = float(vehicle.location.global_frame.lon)
 	
-	print 'WP: ' + str(drone_position_notify)
+	#print 'WP: ' + str(drone_position_notify)
 
 	# check if waypoint reached
-	max_d_m = 2 			# threshold in m
+	max_d_m = 0.5 			# threshold in m
 	max_d = max_d_m * m2d 	# threshold in deg, see calcs.py
 	lat_wp = float(drone_position_notify[0])
 	lon_wp = float(drone_position_notify[1])
 	lat_d = abs(lat_wp - lat)
 	lon_d = abs(lon_wp - lon)
-	print('OFFSET: ' + str([lat_d * d2m, lon_d * d2m]) + 'm')
+	#print('OFFSET: ' + str([lat_d * d2m, lon_d * d2m]) + 'm')
 
 	#pythag_d = (lat_d**2 + lon_d**2)**0.5
 	#print("Aprrox.", pythag_d, "deg = ", pythag_d * d2m, "m to WP (max_d=", max_d, ")")
@@ -109,8 +107,8 @@ def getPosition():
 	print 'DONE'
 
 def getAltitude():
-	# returns altitude above mean sea level
-	alt = vehicle.location.global_frame.alt
+	# returns altitude above home location (location.alt is above mean sea level)
+	alt = (vehicle.location.global_frame.alt) - float(vehicle.home_location.alt)
 	print alt
 	print 'DONE'
 
@@ -131,25 +129,28 @@ def setWaypoint(position):
 	except:
 		position.append(float(vehicle.location.global_frame.alt))
 	
+	# altitude given is relative to ground/home
+	groundHeight = float(vehicle.home_location.alt)
+
 	lat, lon, alt = position
 	lat = float(lat)
 	lon = float(lon) 
-	alt = float(alt)
+	alt = float(alt) + groundHeight	
 	
 	# saves current waypoint co-ordinates
 	drone_position_notify = [lat, lon]
 
 	# print distance to target
-	lat_c = float(vehicle.location.global_frame.lat) # current location
-	lon_c = float(vehicle.location.global_frame.lon)
-	lat_d = abs(lat - lat_c)
-	lon_d = abs(lon - lon_c)
-	print('OFFSET: ' + str([lat_d * d2m, lon_d * d2m]) + 'm')
+	# lat_c = float(vehicle.location.global_frame.lat) # current location
+	# lon_c = float(vehicle.location.global_frame.lon)
+	# lat_d = abs(lat - lat_c)
+	# lon_d = abs(lon - lon_c)
+	# print('OFFSET: ' + str([lat_d * d2m, lon_d * d2m]) + 'm')
 	
 	# converts to co-ord system (LocationGlobalRelative relative to home point?)
 	point = LocationGlobal(lat,lon,alt)
 	vehicle.simple_goto(point)
-	print 'moving to', lat, '', lon, '', alt
+	print 'waypoint set:', lat, '', lon, '', alt
 	print 'DONE'
 	
 def setHeading(heading_relative):
@@ -188,6 +189,7 @@ def startTakeoffSequence():
 	
 	print 'taking off...'
 	vehicle.simple_takeoff(10)
+	time.sleep(2)
 
 	print 'DONE'
 	# Set the controller to take-off and reach a safe altitude (e.g. 20ft)

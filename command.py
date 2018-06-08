@@ -32,6 +32,11 @@ print("command.py running on Py", pyVersion)
 # 		probably can't give a waypoint a heading, but can set heading after arrival
 # 		(UAS can yaw on the spot by using counter-rotating motors)
 
+
+# TODO:
+# Have Pi stop sending commands to Pixhawk if manual override is engaged (i.e. check before sending any commands that mode is still guided)
+# Setup a safe auto-launch - have a predefined setup profile, on startup Pi connects and waits for pixhawk to be armed, and then takes control and takes off
+
 # Utility functions
 # -----------------
 
@@ -263,6 +268,17 @@ if not simulateFCInterface:
 		lat, lon = fcInterface.getPosition()
 		return GPSPosition(lat, lon)
 
+	def fcGetAlt():
+		# returns altitude relative to the ground/home position
+		return fcInterface.getAltitude()
+
+	def fcSetWaypoint(lat, lon, altitude=None):
+		if altitude:
+			fcInterface.setWaypoint(lat, lon, altitude)
+		else:
+			fcInterface.setWaypoint(lat, lon)
+
+
 # Setup GPS Locale
 # ----------------
 log(header("GPS Locale"))
@@ -363,7 +379,8 @@ for s in saRange:
 	capturePoints = Rect2.packUniform(sa, ph, pw, 2)
 
 	# create waypoints
-	saWaypoints[s] = [Waypoint.fromTuple(_, captureAlt) for _ in capturePoints]
+	wpAlt = captureAlt
+	saWaypoints[s] = [Waypoint.fromTuple(_, wpAlt) for _ in capturePoints]
 
 	# increment counter
 	numImagesPlanned += len(capturePoints)
@@ -420,6 +437,7 @@ def getNextWaypoint():
 		if saIsLast:
 			rtbInitiated = 1
 			log("Returning to base")
+			startLandingSequence()
 			return tolWP
 		else:
 			currentSearchArea += 1
@@ -635,7 +653,7 @@ def updateLocation():
 		return v
 	else:
 		gpsPos = fcGetGPSPos()
-		print(gpsPos)
+		#print(gpsPos)
 		return gpsLocale.toVector(gpsPos)
 
 def updateRotation():
@@ -656,17 +674,22 @@ def updateRotation():
 		bearing = fcInterface.getHeading()  # returns heading in degress from North
 		return Vector2.angleVector(bearing)
 
+def getAltitude():
+	if simulateFCInterface:
+		return 0
+	else:
+		return fcGetAlt()
+
 def setWaypoint(w):
-	global nwpCurrentSearchArea, currentSearchArea	
+	global nwpCurrentSearchArea, currentSearchArea, nextWaypoint, lastWaypoint, lastWaypointSetTime
+
+	lastWaypoint = nextWaypoint
+	nextWaypoint = w
+	lastWaypointSetTime = getTime()
+	nwpCurrentSearchArea = currentSearchArea
 	
 	if simulateFCInterface:
-		global nextWaypoint, lastWaypoint, lastWaypointSetTime
-
-		lastWaypoint = nextWaypoint
-		nextWaypoint = w
-		lastWaypointSetTime = getTime()
-		
-		nwpCurrentSearchArea = currentSearchArea
+		pass
 
 	else:
 		gpsPos = gpsLocale.toGPS(w.position)
@@ -674,7 +697,7 @@ def setWaypoint(w):
 		altitude = w.altitude 
 
 		print("Setting FCI waypoint: GPS ", gpsPos)
-		fcInterface.setWaypoint(gpsPos.lat, gpsPos.lon, altitude)
+		fcSetWaypoint(gpsPos.lat, gpsPos.lon, altitude)
 		# [TODO] set heading
 
 def onStableHoverAchieved():
@@ -696,10 +719,16 @@ def onStableHoverAchieved():
 	#setWaypoint(Vector2.randomInUnitCircle() * 15)
 
 def startTakeoffSequence():
-	fcInterface.startTakeoffSequence()
+	if simulateFCInterface:
+		pass
+	else:
+		fcInterface.startTakeoffSequence()
 
 def startLandingSequence():
-	fcInterface.startLandingSequence()
+	if simulateFCInterface:
+		pass
+	else:
+		fcInterface.startLandingSequence()
 
 def captureImage(position, heading):
 	global nwpCurrentSearchArea	
@@ -734,9 +763,13 @@ def captureImage(position, heading):
 	return ImageCapture(img, position, heading, altitude, pixelSize, searchAreaIndex)
 
 # Start FCI cycle
-if fcInterface:
+if not simulateFCInterface:
 	fcInterface.setNotificationCallback('waypointReached', onStableHoverAchieved)
+
+	print("Starting takeoff sequence...")
 	startTakeoffSequence()
+
+	print("Setting initial waypoint...")
 	setWaypoint(nextWaypoint)
 
 # Initialize Display
@@ -799,8 +832,9 @@ while 1:
 	# so these must be called regardless of enableDisplay
 	loc = updateLocation()
 	forward = updateRotation() 	# must match positioning of camera on aircraft
+	alt = getAltitude()
 
-	if fcInterface:
+	if not simulateFCInterface:
 		# handle notifications raised
 		fcInterface.handleNotifications()
 
@@ -859,6 +893,7 @@ while 1:
 		pygDrawText("last: " + str(lastWaypoint), black, (20,20))
 		pygDrawText("next: " + str(nextWaypoint), black, (20,40))
 		pygDrawText("time: " + str(round(getTime(), 1)) + "s", black, (20,60))
+		pygDrawText("alt: " + str(round(alt, 1)) + "m", black, (20,80))
 
 		# draw captured images
 		for ci in capturedImages:
