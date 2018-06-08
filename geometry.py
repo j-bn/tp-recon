@@ -298,8 +298,8 @@ class GPSLocale:
 		r = self.r
 		lat = rad(gpsOrigin.lat)
 		rx = r * math.cos(lat) 	# Radius of horizontal section at origin lattitude 
-		cx = 2 * pi * rx
-		cy = 2 * pi * r
+		cx = 2 * pi * rx 		# Perimeter of circle rx (the horizontal slice)
+		cy = 2 * pi * r 		# Perimeter of circle r (the full earth)
 		self.cfx = cx / 360		# Number of metres per 1 degree change in longditude
 		self.cfy = cy / 360 	# Number of metres per 1 degree change in lattitude
 

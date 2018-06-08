@@ -17,7 +17,7 @@ from recon import * # recon.py
 import random
 import concurrent.futures
 import io
-from fcinterfacedev.dronekit_interface import FCInterface
+from fcinterface.dronekit_interface import FCInterface
 
 isLinux = sys.platform.startswith('linux')
 if isLinux:
@@ -248,13 +248,29 @@ log(header("Coordinate Systems"))
 log("North = N =  0 degrees = +ve Y cartesian")
 log("East  = E = 90 degrees = +ve X cartesian")
 
+# Initialise Interfaces
+# ---------------------
+log(header("Initialising Interfaces"))
+
+# Initialise FC interface
+if not simulateFCInterface:
+	print('Initisalising FCI...')
+	fcInterface = FCInterface('fcinterface/')
+	fcInterface.enableLogging = overrideBoolInput('enable FCI logging', 0)
+	fcInterface.connection()
+
+	def fcGetGPSPos():
+		lat, lon = fcInterface.getPosition()
+		return GPSPosition(lat, lon)
+
 # Setup GPS Locale
 # ----------------
+log(header("GPS Locale"))
 gpsOriginSource = input("Enter GPS origin source ['man', 'drone']: ")
 if gpsOriginSource == 'man':
 	gpsOrigin = GPSPosition.fromInput()
 elif gpsOriginSource == 'drone':
-	gpsOrigin = fcGetGPSLoc()
+	gpsOrigin = fcGetGPSPos()
 else:
 	gpsOrigin = GPSPosition(51.242346, -0.590729)
 
@@ -567,12 +583,6 @@ if isLinux:
 	camera = PiCamera()
 	camera.resolution = resH, resV
 
-# Initialise FC interface
-if not simulateFCInterface:
-	fcInterface = FCInterface()
-	fcInterface.connection()
-	fcInterface.onActionCompleted(onStableHoverAchieved) # set 
-
 # external interfaces:
 # flight control (pixhawk)
 # - set waypoints
@@ -594,10 +604,6 @@ def camCapture():
 	stream.seek(0)
 
 	return Image.open(stream)
-
-def fcGetGPSLoc():
-	lat, lon = fcInterface.getPosition()
-	return GPSPosition(lat, lon)
 
 # Intermediary functions (including simulation)
 def updateLocation():
@@ -628,7 +634,8 @@ def updateLocation():
 
 		return v
 	else:
-		gpsPos = fcGetGPSLoc()
+		gpsPos = fcGetGPSPos()
+		print(gpsPos)
 		return gpsLocale.toVector(gpsPos)
 
 def updateRotation():
@@ -665,6 +672,8 @@ def setWaypoint(w):
 		gpsPos = gpsLocale.toGPS(w.position)
 		heading = w.heading
 		altitude = w.altitude 
+
+		print("Setting FCI waypoint: GPS ", gpsPos)
 		fcInterface.setWaypoint(gpsPos.lat, gpsPos.lon, altitude)
 		# [TODO] set heading
 
@@ -685,6 +694,12 @@ def onStableHoverAchieved():
 	# set next waypoint
 	setWaypoint(nwp)
 	#setWaypoint(Vector2.randomInUnitCircle() * 15)
+
+def startTakeoffSequence():
+	fcInterface.startTakeoffSequence()
+
+def startLandingSequence():
+	fcInterface.startLandingSequence()
 
 def captureImage(position, heading):
 	global nwpCurrentSearchArea	
@@ -717,6 +732,12 @@ def captureImage(position, heading):
 		return camCapture()
 
 	return ImageCapture(img, position, heading, altitude, pixelSize, searchAreaIndex)
+
+# Start FCI cycle
+if fcInterface:
+	fcInterface.setNotificationCallback('waypointReached', onStableHoverAchieved)
+	startTakeoffSequence()
+	setWaypoint(nextWaypoint)
 
 # Initialize Display
 # ------------------
@@ -778,6 +799,10 @@ while 1:
 	# so these must be called regardless of enableDisplay
 	loc = updateLocation()
 	forward = updateRotation() 	# must match positioning of camera on aircraft
+
+	if fcInterface:
+		# handle notifications raised
+		fcInterface.handleNotifications()
 
 	# Display
 	if enableDisplay:
