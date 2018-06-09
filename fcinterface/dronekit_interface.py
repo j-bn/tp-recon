@@ -24,7 +24,6 @@ class FCInterface:
 		filePath = moduleFolder + 'dronekit_functions.py'
 		self.py2 = subprocess.Popen(['python2', '-u', filePath], stdout=subprocess.PIPE, stdin=subprocess.PIPE, universal_newlines=True)
 
-		
 		print ("FCInterface initialised")
 
 	def log(self, *objects):
@@ -42,7 +41,7 @@ class FCInterface:
 		self.log('Sending cmd:', command)
 		self.py2.stdin.write(command + '\n')
 		self.py2.stdin.flush()
-		self.log('Listening...')
+		#self.log('Listening...')
 
 		returnLine = None 	# always the last line before the current one
 		numLinesRead = 0
@@ -51,8 +50,8 @@ class FCInterface:
 			# self.waypoint_reached = False     (no longer required)
 			
 			# check integrity of execution stack
-			if stackHeight == 1:
-				self.log("Erorr: stack height is not one = ", stackHeight)
+			if not stackHeight == 0:
+				self.log("Erorr: stack height is non-zero = ", stackHeight)
 
 			# read subprocess output
 			read = self.py2.stdout.readline()[:-1] # removes final newline character
@@ -162,6 +161,13 @@ class FCInterface:
 		starts landing copter
 		"""
 		self.interface('startLandingSequence')
+
+	def waitForArm(self):
+		"""
+		Blocks caller until vehicle is externally armed (e.g. by RC transmitter for remote take-off), or timeout is reached
+		"""
+		ans = self.interface('waitForArm')
+		return int(ans) # convert to bool (int)
 		
 	# (superseded by notification system)
 	# def onActionCompleted(self, fn):

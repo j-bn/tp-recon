@@ -35,7 +35,7 @@ print("command.py running on Py", pyVersion)
 
 # TODO:
 # Have Pi stop sending commands to Pixhawk if manual override is engaged (i.e. check before sending any commands that mode is still guided)
-# Setup a safe auto-launch - have a predefined setup profile, on startup Pi connects and waits for pixhawk to be armed, and then takes control and takes off
+# [DONE] Setup a safe auto-launch - have a predefined setup profile, on startup Pi connects and waits for pixhawk to be armed, and then takes control and takes off
 
 # Utility functions
 # -----------------
@@ -230,6 +230,7 @@ simulateFCInterface = overrideBoolInput('simulate FC interface', 1)
 simulateCamera = overrideBoolInput('simulate camera', 1)
 inputSearchAreas = 0 # may be modified in createSearchAreas
 enableDisplay = overrideBoolInput('enable drawing', 1) # headless mode
+waitForArm = overrideBoolInput('wait for remote arm', 0) # for remote take-off trigger
 
 # System Parameters
 # -----------------
@@ -462,8 +463,19 @@ def getNextWaypoint():
 
 	return closestWP
 
-# Wait before beginning
+# Wait before starting flight
+# (takeoff procedure will arm the vehicle if not already)
 input("Press enter to start flight...")
+if waitForArm and not simulateFCInterface:
+	success = fcInterface.waitForArm()
+	if success:
+		log('Successfully armed')
+	else:
+		log('Arming timed out, shutting down...')
+		exit()
+
+# In-Flight
+# ---------
 
 log(header("Flight Log"))
 log("Initial waypoint:", nextWaypoint)
@@ -719,12 +731,16 @@ def onStableHoverAchieved():
 	#setWaypoint(Vector2.randomInUnitCircle() * 15)
 
 def startTakeoffSequence():
+	print("Starting takeoff sequence...")
+
 	if simulateFCInterface:
 		pass
 	else:
 		fcInterface.startTakeoffSequence()
 
 def startLandingSequence():
+	print("Starting landing sequence...")
+
 	if simulateFCInterface:
 		pass
 	else:
@@ -766,7 +782,6 @@ def captureImage(position, heading):
 if not simulateFCInterface:
 	fcInterface.setNotificationCallback('waypointReached', onStableHoverAchieved)
 
-	print("Starting takeoff sequence...")
 	startTakeoffSequence()
 
 	print("Setting initial waypoint...")
@@ -819,7 +834,6 @@ if enableDisplay:
 
 # Sim/Display Loop
 # ----------------
-
 while 1:
 
 	# respond to shutdown flag

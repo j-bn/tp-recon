@@ -175,17 +175,21 @@ def setHeading(heading_relative):
 
 def startTakeoffSequence():
 	# arming vehicle and making sure it is armed, if it fails then nothing else will work. 
-	for i in range(0,500):
-		vehicle.armed = True
+	if not vehicle.armed:
+		print 'arming vehicle...'
+		for i in range(0,500):
+			vehicle.armed = True
 
-		# wait for critical motor arming (arm seems to take a while and doesn't block)
-		# if these dont complete the aircraft will not move in SITL
-		time.sleep(0.5)
+			# wait for critical motor arming (arm seems to take a while and doesn't block)
+			# if these dont complete the aircraft will not move in SITL
+			time.sleep(0.5)
 
-		print "Armed: %s" % vehicle.armed
+			print "Armed: %s" % vehicle.armed
 
-		if vehicle.armed == True:
-			break
+			if vehicle.armed == True:
+				break
+	else:
+		print 'vehicle already armed'
 	
 	print 'taking off...'
 	vehicle.simple_takeoff(10)
@@ -194,24 +198,32 @@ def startTakeoffSequence():
 	print 'DONE'
 	# Set the controller to take-off and reach a safe altitude (e.g. 20ft)
 
-
-
 def startLandingSequence():
 	# should probably check the parameters for this..
 	vehicle.mode = VehicleMode("RTL")
 	print 'Return to Land executed'
 	print 'DONE'
 
-# def notification(fn):
-# 	# Notification functions
-# 	def location_callback(self, attr_name, value):
-# 		print "Location (Global): ", value
+def waitForArm():
+	# Calculate delay
+	t = 5 * 60 # seconds
+	d = 0.5
+	n = int(round(t / d))
 
-# 	if fn == 'LOCATION':
-# 		# Add a callback `location_callback` for the `global_frame` attribute.
-# 		vehicle.add_attribute_listener('location.global_frame', location_callback)
+	success = 0  # did it arm (1) or time out (0)?
+	for i in range(0,n):
+		if vehicle.armed == True:
+			success = 1
+			break
 
-# end function
+		time.sleep(d)
+
+	print 'Succesfully armed' if success else 'Wait for arm timed out'
+
+	print success
+	print 'DONE'
+
+# end functions
 	
 while 1:
 	try:
@@ -219,13 +231,15 @@ while 1:
 		args = raw_input('FCI-F> ').split()
 		cmd = args.pop(0) # remove first element (command)
 	except:
-		sys.exit()
+		sys.exit() 	# exit if EOF received or other error
 
 	print("COMMAND " + cmd)
 
 	# commands are exclusive so elif will be much faster than if
 
-	if cmd == "connection":
+	if cmd == "":
+		pass
+	elif cmd == "connection":
 		connection()
 	elif cmd == "getHeading":
 		getHeading()
@@ -249,6 +263,8 @@ while 1:
 		notification()
 	elif cmd == "getHome":
 		getHome()
+	elif cmd == "waitForArm":
+		waitForArm()
 
 	# elif cmd == "telemetryTransmit":
 	#     telemetryTransmit(args)
@@ -269,5 +285,5 @@ while 1:
 	else:
 		print('Unkown command:', cmd)
 
-	# keep script alive in between commands
+	# pause in between commands
 	time.sleep(0.1)
