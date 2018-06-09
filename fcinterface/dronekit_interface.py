@@ -103,10 +103,12 @@ class FCInterface:
 		connection to vehicle through interface and performs basic setup including setting home.
 		won't complete until connection has complete
 		"""
-		
 		self.interface('connection')
-		
 		return True
+
+	def runTest(self):
+		ans = self.interface('runTest')
+		return ans
 
 	def getHeading(self):
 		"""

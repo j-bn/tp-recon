@@ -283,6 +283,16 @@ if not simulateFCInterface:
 		else:
 			fcInterface.setWaypoint(lat, lon)
 
+	# run
+	doFCTest = overrideBoolInput('run flight control test', 0)
+	if doFCTest:
+		log('Running test...')
+		out = fcInterface.runTest()
+		log("Test output:", out)
+		time.sleep(5)
+		log('Exiting...')
+		exit()
+
 
 # Setup GPS Locale
 # ----------------

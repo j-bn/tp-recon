@@ -29,6 +29,8 @@ def initSITL():
 	sitl = dronekit_sitl.start_default()
 	print 'sitl started'
 	##########################################
+	
+	print'DONE'
 
 def connection():
 	# Connect to the Vehicle
@@ -66,7 +68,7 @@ def connection():
 	print "\n Home location: %s" % vehicle.home_location
 	
 	# Copter should arm in GUIDED mode
-	vehicle.mode    = VehicleMode("GUIDED")
+	#vehicle.mode    = VehicleMode("GUIDED")
 
 	# Sanity Checks
 	print " Type: %s" % vehicle._vehicle_type
@@ -83,6 +85,19 @@ def connection():
 	connectedFlag = 1
 	
 	# completes command
+	print'DONE'
+
+def runTest():
+	lat = float(vehicle.location.global_frame.lat)
+	lon = float(vehicle.location.global_frame.lon)
+	rot = repr(vehicle.heading)
+	alt = vehicle.location.global_frame.alt
+
+	print 'Disarming...'
+	for i in range(0,10):
+		vehicle.armed = False
+
+	print(lat, lon, rot, alt)
 	print'DONE'
 
 def getHeading():
@@ -261,6 +276,8 @@ while 1:
 			initSITL()
 		elif cmd == "connection":
 			connection()
+		elif cmd == "runTest":
+			runTest()
 		elif cmd == "getHeading":
 			getHeading()
 		elif cmd == "getPosition":
