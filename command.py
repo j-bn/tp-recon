@@ -226,11 +226,12 @@ clearDir('out-archive')
 # check platform name
 log("sys.platform = " + sys.platform)
 
-simulateFCInterface = overrideBoolInput('simulate FC interface', 1)
-simulateCamera = overrideBoolInput('simulate camera', 1)
-inputSearchAreas = 0 # may be modified in createSearchAreas
-enableDisplay = overrideBoolInput('enable drawing', 1) # headless mode
-waitForArm = overrideBoolInput('wait for remote arm', 0) # for remote take-off trigger
+inputSearchAreas = 		0 # may be modified in createSearchAreas
+simulateFCInterface = 	overrideBoolInput('simulate FC interface', 1)
+simulateCamera = 		overrideBoolInput('simulate camera', 1)
+enableDisplay = 		overrideBoolInput('enable drawing', 1) 			# headless mode
+waitForArm = 			overrideBoolInput('wait for remote arm', 0) 	# for remote take-off trigger
+enableSITL = 			overrideBoolInput('enable dronekit-sitl', 1)
 
 # System Parameters
 # -----------------
@@ -263,6 +264,9 @@ if not simulateFCInterface:
 	print('Initisalising FCI...')
 	fcInterface = FCInterface('fcinterface/')
 	fcInterface.enableLogging = overrideBoolInput('enable FCI logging', 0)
+
+	# connect to flight control system
+	if enableSITL: fcInterface.initSITL()
 	fcInterface.connection()
 
 	def fcGetGPSPos():

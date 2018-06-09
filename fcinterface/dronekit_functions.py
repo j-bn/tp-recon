@@ -19,15 +19,18 @@ d2m = 1/approxDegsPerMetre  # multiply degrees by this to get metres (M = D / ~9
 drone_position_notify = [0,0]
 
 connectedFlag = 0
+sitl = None
 
-def connection():
-	
+def initSITL():
+	global sitl
+
 	# sitl stuff   ###########################
 	import dronekit_sitl
 	sitl = dronekit_sitl.start_default()
 	print 'sitl started'
 	##########################################
-	
+
+def connection():
 	# Connect to the Vehicle
 	print "Connecting"
 	# referenced elsewhere in the file
@@ -35,9 +38,12 @@ def connection():
 	
 	# once heartbeat has been adjusted, timeout needs to be set to 5
 	# location of USB connection to pixhawk
-	# connection_string       = '/dev/ttyACM0'
-	
-	connection_string = sitl.connection_string()
+
+	if sitl == None:
+		connection_string       = '/dev/ttyACM0'
+	else:
+		connection_string = sitl.connection_string()
+
 	vehicle = connect(connection_string, wait_ready=True) #heartbeat_timeout = 30)
 	
 	print 'connected to vehicle'
@@ -251,6 +257,8 @@ while 1:
 		# commands are exclusive so elif will be much faster than if
 		if cmd == "":
 			pass
+		elif cmd == "initSITL":
+			initSITL()
 		elif cmd == "connection":
 			connection()
 		elif cmd == "getHeading":

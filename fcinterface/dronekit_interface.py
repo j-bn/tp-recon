@@ -94,6 +94,10 @@ class FCInterface:
 			if note in self.notificationCallbacks:
 				self.notificationCallbacks[note]()
 
+	def initSITL(self):
+		self.interface('initSITL')
+		return True
+
 	def connection(self):
 		"""
 		connection to vehicle through interface and performs basic setup including setting home.
