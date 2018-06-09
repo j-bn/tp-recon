@@ -18,6 +18,8 @@ d2m = 1/approxDegsPerMetre  # multiply degrees by this to get metres (M = D / ~9
 # essentially WP position
 drone_position_notify = [0,0]
 
+connectedFlag = 0
+
 def connection():
 	
 	# sitl stuff   ###########################
@@ -71,6 +73,8 @@ def connection():
 	
 	# set parameters
 	vehicle.parameters['WP_YAW_BEHAVIOR'] = 0
+
+	connectedFlag = 1
 	
 	# completes command
 	print'DONE'
@@ -233,57 +237,67 @@ while 1:
 	except:
 		sys.exit() 	# exit if EOF received or other error
 
-	print("COMMAND " + cmd)
-
-	# commands are exclusive so elif will be much faster than if
-
-	if cmd == "":
-		pass
-	elif cmd == "connection":
-		connection()
-	elif cmd == "getHeading":
-		getHeading()
-	elif cmd == "getPosition":
-		getPosition()
-	elif cmd == "getPosition":
-		getPosition()
-	elif cmd == "getAltitude":
-		getAltitude()
-	elif cmd == "setWaypoint":
-		setWaypoint(args)
-	elif cmd == "setHeading":
-		setHeading(args)
-	elif cmd == "startTakeoffSequence":
-		startTakeoffSequence()
-	elif cmd == "startLandingSequence":
-		startLandingSequence()
-	elif cmd == "getStatus":
-		getStatus()
-	elif cmd == "notification":
-		notification()
-	elif cmd == "getHome":
-		getHome()
-	elif cmd == "waitForArm":
-		waitForArm()
-
-	# elif cmd == "telemetryTransmit":
-	#     telemetryTransmit(args)
-	
-	elif cmd == "exit":
-		# sitl stuff
-		try:
-			sitl.stop()
-		except:
-			print 'no sitl!'
-
-		# exit by simply ending the script
-		break
- 
-		# exit manually
-		sys.exit()
-
+	# get string connected flag
+	if connectedFlag:
+		vehicleMode = str(vehicle.mode)
 	else:
-		print('Unkown command:', cmd)
+		vehicleMode = "(NC)" # not connected
+
+	# submit command
+	# (only if vehicle has not been taken over my manual control)
+	if vehicleMode == "GUIDED" or vehicleMode == "(NC)":
+		print("COMMAND " + cmd)
+
+		# commands are exclusive so elif will be much faster than if
+		if cmd == "":
+			pass
+		elif cmd == "connection":
+			connection()
+		elif cmd == "getHeading":
+			getHeading()
+		elif cmd == "getPosition":
+			getPosition()
+		elif cmd == "getPosition":
+			getPosition()
+		elif cmd == "getAltitude":
+			getAltitude()
+		elif cmd == "setWaypoint":
+			setWaypoint(args)
+		elif cmd == "setHeading":
+			setHeading(args)
+		elif cmd == "startTakeoffSequence":
+			startTakeoffSequence()
+		elif cmd == "startLandingSequence":
+			startLandingSequence()
+		elif cmd == "getStatus":
+			getStatus()
+		elif cmd == "notification":
+			notification()
+		elif cmd == "getHome":
+			getHome()
+		elif cmd == "waitForArm":
+			waitForArm()
+
+		# elif cmd == "telemetryTransmit":
+		#     telemetryTransmit(args)
+		
+		elif cmd == "exit":
+			# sitl stuff
+			try:
+				sitl.stop()
+			except:
+				print 'no sitl!'
+
+			# exit by simply ending the script
+			break
+	 
+			# exit manually
+			sys.exit()
+
+		else:
+			print('Unkown command:', cmd)
+	else:
+		print 'Vehicle appears to be being controlled manually - aborting command.'
 
 	# pause in between commands
 	time.sleep(0.1)
