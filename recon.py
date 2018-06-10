@@ -33,6 +33,7 @@ else:
 # -----------------
 
 enableLogging = 0
+debugMode = 0
 
 # Utility Functions
 # -----------------
@@ -53,13 +54,13 @@ def clearDir(folder):
 
 	#folder = '/path/to/folder'
 	for the_file in os.listdir(folder):
-	    file_path = os.path.join(folder, the_file)
-	    try:
-	        if os.path.isfile(file_path):
-	            os.unlink(file_path)
-	        elif os.path.isdir(file_path): shutil.rmtree(file_path)
-	    except Exception as e:
-	        print(e)
+		file_path = os.path.join(folder, the_file)
+		try:
+			if os.path.isfile(file_path):
+				os.unlink(file_path)
+			elif os.path.isdir(file_path): shutil.rmtree(file_path)
+		except Exception as e:
+			print(e)
 
 	# create file
 	f = open(folder + "/dummy.txt","w+")
@@ -126,6 +127,9 @@ def processImage(img, pixelSize, imgID=None, saveInputImageWithMetadata=None):
 
 	# ignore enableLogging
 	print("Started processing image", imgID)
+
+	# Clear the out folder for each run
+	clearDir('out')
 
 	# Archive image
 	# implemented to free up memory to fix problems on the ~22nd image
@@ -510,37 +514,42 @@ def processImage(img, pixelSize, imgID=None, saveInputImageWithMetadata=None):
 # Initisialisation
 # ----------------
 
-# Clear the out folder for each run
-clearDir('out')
+if __name__ == "__main__":
+	# stuff only to run when not called via 'import' here
 
-debugMode = 0
+	print('Running recon.py test code...')
 
-# test image mode	resolution, ground pixel size 	->	field size
-# camera mode		camera res, optics, alt 		->	pixel size not defined, calculate via triganometry etc.
-testImageMode = 0
+	# Clear the out folder for each run
+	clearDir('out')
 
-if len(sys.argv) > 1:
-	testImageMode = 1
-	enableLogging = 1
-	testImagePath = "test-images/" + sys.argv[1]
+	debugMode = 0
 
-if testImageMode:
-	log("Test Image Mode")
+	# test image mode	resolution, ground pixel size 	->	field size
+	# camera mode		camera res, optics, alt 		->	pixel size not defined, calculate via triganometry etc.
+	testImageMode = 0
 
-	# Set ground resolution
-	if testImagePath.endswith("25m.jpg"):
-		groundRes = 3.38 # cm
-	else:
-		groundRes = 1
+	if len(sys.argv) > 1:
+		testImageMode = 1
+		enableLogging = 1
+		testImagePath = "test-images/" + sys.argv[1]
 
-	pixelSize = groundRes / 100	# m
+	if testImageMode:
+		log("Test Image Mode")
 
-	# Load image
-	log(" Loading " + testImagePath)
+		# Set ground resolution
+		if testImagePath.endswith("25m.jpg"):
+			groundRes = 3.38 # cm
+		else:
+			groundRes = 1
 
-	log("Opening image...")
-	img = Image.open(testImagePath)
+		pixelSize = groundRes / 100	# m
 
-	log("",img.format, img.size, img.mode)
+		# Load image
+		log(" Loading " + testImagePath)
 
-	processImage(img, pixelSize)
+		log("Opening image...")
+		img = Image.open(testImagePath)
+
+		log("",img.format, img.size, img.mode)
+
+		processImage(img, pixelSize)

@@ -43,13 +43,13 @@ print("command.py running on Py", pyVersion)
 def exit():
 	sys.exit()
 
-def log(*objects):
+def log(*objects, end='\n'):
 	# log(*objects, sep=' ', end='\n', file=sys.stdout, flush=False)
 
-	print(*objects) 				# to stdout
+	print(*objects, end=end) 				# to stdout
 
 	if logFile:
-		print(*objects, file=logFile) 	# to log file
+		print(*objects, end=end, file=logFile) 	# to log file
 
 def header(s):
 	return "\n" + underline(s)
@@ -104,22 +104,22 @@ def createSearchAreas(n):
 
 		rects = [None] * n
 
-		coordMode = 'gps' if input(" Enter Y tp use spatial GPS coordinates:").lower() == "y" else 'cartesian'
+		coordMode = 'gps' if inputC(" Enter Y tp use spatial GPS coordinates:").lower() == "y" else 'cartesian'
 
 		for i in range(0,n):
 			log(" Search area #" + str(i+1))
 			log("  Centre position")
 			if coordMode == 'gps':
-				gps = GPSPosition.fromInput()
+				gps = inputGPSPos()
 				vec = gpsLocale.toVector(gps)
 				cx = vec.x
 				cy = vec.y
 			elif coordMode == 'cartesian':
-				cx = float(input("  X coord (m) = "))
-				cy = float(input("  Y coord (m) = "))
-			an = float(input("  Rotation (CW, deg) = "))
-			sp = float(input("  Full size 'width' in Primary axis (m) = "))
-			ss = float(input("  Full size 'height' in Secondary axis (m) = "))
+				cx = float(inputC("  X coord (m) = "))
+				cy = float(inputC("  Y coord (m) = "))
+			an = float(inputC("  Rotation (CW, deg) = "))
+			sp = float(inputC("  Full size 'width' in Primary axis (m) = "))
+			ss = float(inputC("  Full size 'height' in Secondary axis (m) = "))
 
 			center = Vector2(cx, cy)
 			size = Vector2(sp, ss)
@@ -131,7 +131,7 @@ def createSearchAreas(n):
 		return randomSearchAreas(n)
 
 def overrideBoolInput(name, default):
-	ovr = input("Enter [Y/n] to override {}: ".format(name))
+	ovr = inputC("Enter [Y/n] to override {}: ".format(name))
 	if ovr:
 		if ovr.lower() == 'y':
 			return 1
@@ -140,6 +140,49 @@ def overrideBoolInput(name, default):
 	else:
 		#print('defaulted to ' + str(default), end='')
 		return default
+
+def loadFileLines(filename):
+	file = open(filename)
+	lines = file.read().splitlines() 
+	file.close()
+
+	return lines
+
+def inputGPSPos():
+	log("  Enter GPS position (degrees)")
+	lat = float(inputC("   Lat:"))
+	lon = float(inputC("   Lon:"))
+	return GPSPosition(lat, lon)
+
+# Setup Log File
+# --------------
+
+logFile = open('log.txt', 'w+') # also empties the file
+log('Log file set up at', datetime.datetime.now())
+
+# Auto-Configuration
+# ------------------
+
+configLines = None 	# next 
+
+if len(sys.argv) > 1: 	# first element is the script name
+	filename = 'config/' + sys.argv[1] + '.cfg'
+	log("Loading configuration file:", filename)
+	configLines = loadFileLines(filename)
+
+def inputC(prompt):
+	# Configurable version of input()
+
+	if configLines == None:
+		return input(prompt)
+	else:
+		if len(configLines) > 0:
+			answer = configLines.pop(0)
+		else:
+			answer = ''
+
+		log(prompt + answer)
+		return answer
 
 # Classes
 # -------
@@ -215,10 +258,6 @@ class FoundTarget:
 
 # Initial commands
 # ----------------
-
-# setup log file
-logFile = open('log.txt', 'w+') # also empties the file
-log('Log file set up at', datetime.datetime.now())
 
 # clear archive directory - will be re-populated by recon.py on processing of each image
 clearDir('out-archive')
@@ -297,9 +336,9 @@ if not simulateFCInterface:
 # Setup GPS Locale
 # ----------------
 log(header("GPS Locale"))
-gpsOriginSource = input("Enter GPS origin source ['man', 'drone']: ")
+gpsOriginSource = inputC("Enter GPS origin source ['man', 'drone']: ")
 if gpsOriginSource == 'man':
-	gpsOrigin = GPSPosition.fromInput()
+	gpsOrigin = inputGPSPos()
 elif gpsOriginSource == 'drone':
 	gpsOrigin = fcGetGPSPos()
 else:
@@ -332,7 +371,7 @@ for sa in searchAreas:
 	log(" Search area of", sArea, "m2", sDist, "m from the origin")
 
 targetSize = 2 # m, size=width=height
-overlapFactor = float(input("Enter overlap factor: ") or 1) # defaults to 1...
+overlapFactor = float(inputC("Enter overlap factor: ") or 1) # defaults to 1...
 # - where a single target rotated to (worst case)
 # - 45 degrees and placed at the boundary between captures will appear only just fully in both images 
 overlapRequired = targetSize * overlapFactor * 2**0.5
@@ -479,7 +518,7 @@ def getNextWaypoint():
 
 # Wait before starting flight
 # (takeoff procedure will arm the vehicle if not already)
-input("Press enter to start flight...")
+inputC("Press enter to start flight...")
 if waitForArm and not simulateFCInterface:
 	success = fcInterface.waitForArm()
 	if success:
@@ -516,7 +555,7 @@ def checkMissionComplete():
 		missionReport()
 
 		log("")
-		input("Press enter to shutdown:")
+		inputC("Press enter to shutdown:")
 		log("Shutting down...")
 		shutdownFlag = 1 # checkMissionComplete can be called by a thread callback, so exit needs to be called elsewhere
 
