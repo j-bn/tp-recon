@@ -42,7 +42,8 @@ def connection():
 	# location of USB connection to pixhawk
 
 	if sitl == None:
-		connection_string       = '/dev/ttyACM0'
+		connection_string       = '/dev/ttyACM0' 	# USB
+		#connection_string       = '/dev/ttyAMA0' 	# serial
 	else:
 		connection_string = sitl.connection_string()
 

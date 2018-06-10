@@ -1,0 +1,12 @@
+http://ardupilot.org/dev/docs/raspberry-pi-via-mavlink.html
+RPi 3 GPIO Pinout: https://www.element14.com/community/servlet/JiveServlet/previewBody/73950-102-12-339300/pi3_gpio.png
+
+10/06/18
+--------
+
+connection worked and armed after some messing around but connecting mission planned broke it
+lukas suggested that this was because we are connecting to the Pixhawk via USB
+
+to list interfaces:  $ ls /dev/*tty
+USB interface (working): /dev/ttyACM0
+Oli reccommended for serial: /dev/ttyAMA0

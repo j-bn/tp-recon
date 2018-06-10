@@ -34,7 +34,7 @@ print("command.py running on Py", pyVersion)
 
 
 # TODO:
-# Have Pi stop sending commands to Pixhawk if manual override is engaged (i.e. check before sending any commands that mode is still guided)
+# [DONE] Have Pi stop sending commands to Pixhawk if manual override is engaged (i.e. check before sending any commands that mode is still guided)
 # [DONE] Setup a safe auto-launch - have a predefined setup profile, on startup Pi connects and waits for pixhawk to be armed, and then takes control and takes off
 
 # Utility functions
@@ -745,19 +745,17 @@ def onStableHoverAchieved():
 	#setWaypoint(Vector2.randomInUnitCircle() * 15)
 
 def startTakeoffSequence():
-	print("Starting takeoff sequence...")
-
 	if simulateFCInterface:
 		pass
 	else:
+		print("Starting FCI takeoff sequence...")
 		fcInterface.startTakeoffSequence()
 
 def startLandingSequence():
-	print("Starting landing sequence...")
-
 	if simulateFCInterface:
 		pass
 	else:
+		print("Starting FCI landing sequence...")  # [TODO] CHECK THIS IS PRINTED IN THE SIMULATION BEFORE FLIGHT TESTING - IT SETS RTB
 		fcInterface.startLandingSequence()
 
 def captureImage(position, heading):
