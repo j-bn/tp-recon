@@ -48,10 +48,6 @@ class FCInterface:
 		stackHeight = 0 	# number of execution levels = number of COMMANDs printed - number of DONEs printed
 		while numLinesRead < self.timeoutLines:
 			# self.waypoint_reached = False     (no longer required)
-			
-			# check integrity of execution stack
-			if not stackHeight == 0:
-				self.log("Erorr: stack height is non-zero = ", stackHeight)
 
 			# read subprocess output
 			read = self.py2.stdout.readline()[:-1] # removes final newline character
@@ -76,6 +72,11 @@ class FCInterface:
 				stackHeight -= 1
 				return returnLine
 				break
+
+			else:
+				# check integrity of execution stack
+				if not stackHeight == 1:
+					self.log("Error: stack height is wrong = ", stackHeight)
 
 			returnLine = read
 			numLinesRead += 1
