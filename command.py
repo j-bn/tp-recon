@@ -141,6 +141,13 @@ def overrideBoolInput(name, default):
 		#print('defaulted to ' + str(default), end='')
 		return default
 
+def overrideInput(name, default):
+	ovr = inputC("Enter value to override {}: ".format(name))
+	if ovr:
+		return ovr
+	else:
+		return default
+
 def loadFileLines(filename):
 	file = open(filename)
 	lines = file.read().splitlines() 
@@ -285,7 +292,8 @@ enableSITL = 			overrideBoolInput('enable dronekit-sitl', 1)
 # / \  +-----+ j=H         = image right = increasing i
 #
 cruiseSpeed = 16
-captureAlt = 80
+captureAltOptimum = 80 	# roughly 70-80
+captureAlt = float(overrideInput('capture altitude', captureAltOptimum))
 fovS, fovP = 62.2, 48.8 	# https://www.raspberrypi.org/documentation/hardware/camera/README.md
 resH, resV = 3280, 2464
 
