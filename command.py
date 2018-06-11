@@ -97,14 +97,14 @@ def createSearchAreas(n):
 	inputSearchAreas = overrideBoolInput('manual SA input', inputSearchAreas)
 
 	if inputSearchAreas: # manually input search areas
-		log(underline("Search Area Setup"))
+		log(header("Search Area Setup"))
 
 		# [TODO] Handle multiple input formats
 		# [TODO] Handle GPS and cartesian input formats
 
 		rects = [None] * n
 
-		coordMode = 'gps' if inputC(" Enter Y tp use spatial GPS coordinates:").lower() == "y" else 'cartesian'
+		coordMode = 'gps' if inputC(" Enter Y tp use spatial GPS coordinates: ").lower() == "y" else 'cartesian'
 
 		for i in range(0,n):
 			log(" Search area #" + str(i+1))
@@ -122,7 +122,7 @@ def createSearchAreas(n):
 			ss = float(inputC("  Full size 'height' in Secondary axis (m) = "))
 
 			center = Vector2(cx, cy)
-			size = Vector2(sp, ss)
+			size = Vector2(sp, ss) / 2
 			rects[i] = Rect2.aabb(center, size).rotate(deg(an))
 
 		log(rects)
@@ -367,8 +367,8 @@ else:
 	tolWP = Waypoint(Vector2(20,10), None, 0)
 
 log("TO/L waypoint:", tolWP)
-searchAreas = createSearchAreas(2)
-searchAreaCount = len(searchAreas)
+searchAreaCount = int(overrideInput('serach area count', 2))
+searchAreas = createSearchAreas(searchAreaCount)
 targetsPerSearchArea = 2
 altitudeLimits = [20 * 0.3048, 400 * 0.3048] # convert from feet to metres
 

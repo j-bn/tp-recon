@@ -161,6 +161,7 @@ class Rect2:
 
 	# Static definitions
 	def aabb(center, size):
+		# size is actually extents
 		ar = size.x / size.y
 		return Rect2(center, Vector2(size.x, 0), ar)
 
