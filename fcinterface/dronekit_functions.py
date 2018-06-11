@@ -219,7 +219,10 @@ def startTakeoffSequence():
 	
 	print 'taking off...'
 	vehicle.simple_takeoff(10)
-	time.sleep(2)
+
+	for i in range(30):
+		time.sleep(0.5)
+		print 'abs alt: ' + str(vehicle.location.global_frame.alt)
 
 	print 'DONE'
 	# Set the controller to take-off and reach a safe altitude (e.g. 20ft)
@@ -275,7 +278,7 @@ while 1:
 			pass
 		elif cmd == "initSITL":
 			initSITL()
-		elif cmd == "connection":
+		elif cmd == "connection" or cmd == "connect":
 			connection()
 		elif cmd == "runTest":
 			runTest()
@@ -291,9 +294,9 @@ while 1:
 			setWaypoint(args)
 		elif cmd == "setHeading":
 			setHeading(args)
-		elif cmd == "startTakeoffSequence":
+		elif cmd == "startTakeoffSequence" or cmd == "sto":
 			startTakeoffSequence()
-		elif cmd == "startLandingSequence":
+		elif cmd == "startLandingSequence" or cmd == "rtl":
 			startLandingSequence()
 		elif cmd == "getStatus":
 			getStatus()

@@ -65,7 +65,7 @@ class FCInterface:
 				# except:
 				# 	pass
 
-			elif read.startswith('COMMAND'):
+			elif read.contains('COMMAND'): 	# first line so will begin with ...>
 				stackHeight += 1
 
 			elif read.startswith('DONE'):
@@ -74,7 +74,7 @@ class FCInterface:
 				break
 
 			else:
-				# check integrity of execution stack
+				# check integrity of execution stack (not working for some reason)
 				if not stackHeight == 1:
 					self.log("Error: stack height is wrong = ", stackHeight)
 
@@ -108,6 +108,7 @@ class FCInterface:
 		return True
 
 	def runTest(self):
+		print("Running test... (will disarm)")
 		ans = self.interface('runTest')
 		return ans
 
