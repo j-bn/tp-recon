@@ -777,11 +777,18 @@ def setWaypoint(w):
 
 		log("Setting FCI waypoint: GPS ", gpsPos)
 		fcSetWaypoint(gpsPos.lat, gpsPos.lon, altitude)
-		# [TODO] set heading
 
 def onStableHoverAchieved():
+	global nextWaypoint
+
 	log("Reached waypoint")
 
+	# rotate to waypoint heading before continuing
+	if nextWaypoint.heading:
+		fcInterface.setHeading(deg(nextWaypoint.heading.bearing())) 	# set exact heading (not a parralel one) because the camera needs to point the correct direction [TODO] or maybe not - do the positions get translated based on captured image rect or planned rect?
+		time.sleep(15) 	# wait for rotation to complete (assuming 20 deg/s, 180 deg rotation -> 9s) 	[TODO] should really be callback based
+
+	# get next waypoint
 	nwp = getNextWaypoint()
 
 	if nwp:
@@ -795,7 +802,6 @@ def onStableHoverAchieved():
 
 	# set next waypoint
 	setWaypoint(nwp)
-	#setWaypoint(Vector2.randomInUnitCircle() * 15)
 
 def startTakeoffSequence():
 	if simulateFCInterface:

@@ -156,6 +156,7 @@ class FCInterface:
 		"""
 		travels in set heading (in degrees from North.)
 		"""
+		print("Setting FCI heading to", heading, "deg")
 		self.interface('setHeading' + ' ' + str(heading))
 
 	def startTakeoffSequence(self):

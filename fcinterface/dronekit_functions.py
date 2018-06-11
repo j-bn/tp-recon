@@ -181,8 +181,8 @@ def setWaypoint(position):
 	
 def setHeading(heading_relative):
 	# retrieves values froms args list
-	heading = int(heading_relative[0])
-	is_relative=0
+	heading = float(heading_relative[0])
+	is_relative = 0
 	yaw_speed = 20
 	# create the CONDITION_YAW command using command_long_encode()
 	msg = vehicle.message_factory.command_long_encode(
@@ -219,10 +219,7 @@ def startTakeoffSequence():
 	
 	print 'taking off...'
 	vehicle.simple_takeoff(10)
-
-	for i in range(30):
-		time.sleep(0.5)
-		print 'abs alt: ' + str(vehicle.location.global_frame.alt)
+	time.sleep(1)
 
 	print 'DONE'
 	# Set the controller to take-off and reach a safe altitude (e.g. 20ft)
