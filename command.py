@@ -184,7 +184,8 @@ def inputC(prompt):
 		return input(prompt)
 	else:
 		if len(configLines) > 0:
-			answer = configLines.pop(0)
+			line = configLines.pop(0)
+			answer = line.split('#')[0].rstrip('\t') 	# removes comments and tabs
 		else:
 			answer = ''
 
