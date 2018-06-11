@@ -69,7 +69,7 @@ def connection():
 	print "\n Home location: %s" % vehicle.home_location
 	
 	# Copter should arm in GUIDED mode
-	#vehicle.mode    = VehicleMode("GUIDED")
+	vehicle.mode    = VehicleMode("GUIDED")
 
 	# Sanity Checks
 	print " Type: %s" % vehicle._vehicle_type
