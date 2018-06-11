@@ -138,7 +138,7 @@ def overrideBoolInput(name, default):
 		else:
 			return 0
 	else:
-		#print('defaulted to ' + str(default), end='')
+		#log('defaulted to ' + str(default), end='')
 		return default
 
 def overrideInput(name, default):
@@ -309,13 +309,18 @@ log(header("Initialising Interfaces"))
 
 # Initialise FC interface
 if not simulateFCInterface:
-	print('Initisalising FCI...')
+	log('Initisalising FCI...')
 	fcInterface = FCInterface('fcinterface/')
 	fcInterface.enableLogging = overrideBoolInput('enable FCI logging', 0)
 
 	# connect to flight control system
 	if enableSITL: fcInterface.initSITL()
 	fcInterface.connection()
+
+	# try connection again if didnt work
+	connected = len(fcInterface.getPosition()) == 2 	# should be a tuple with two elements
+	if not connected:
+		fcInterface.connection()  	# connection to PX4 sometimes only works the second time?
 
 	def fcGetGPSPos():
 		lat, lon = fcInterface.getPosition()
@@ -334,7 +339,7 @@ if not simulateFCInterface:
 	# run
 	doFCTest = overrideBoolInput('run flight control test', 0)
 	if doFCTest:
-		log('Running test...')
+		log('Running test... (will disarm)')
 		out = fcInterface.runTest()
 		log("Test output:", out)
 		time.sleep(5)
@@ -727,7 +732,7 @@ def updateLocation():
 		return v
 	else:
 		gpsPos = fcGetGPSPos()
-		#print(gpsPos)
+		#log(gpsPos)
 		return gpsLocale.toVector(gpsPos)
 
 def updateRotation():
@@ -770,7 +775,7 @@ def setWaypoint(w):
 		heading = w.heading
 		altitude = w.altitude 
 
-		print("Setting FCI waypoint: GPS ", gpsPos)
+		log("Setting FCI waypoint: GPS ", gpsPos)
 		fcSetWaypoint(gpsPos.lat, gpsPos.lon, altitude)
 		# [TODO] set heading
 
@@ -796,14 +801,14 @@ def startTakeoffSequence():
 	if simulateFCInterface:
 		pass
 	else:
-		print("Starting FCI takeoff sequence...")
+		log("Starting FCI takeoff sequence...")
 		fcInterface.startTakeoffSequence()
 
 def startLandingSequence():
 	if simulateFCInterface:
 		pass
 	else:
-		print("Starting FCI landing sequence...")  # [TODO] CHECK THIS IS PRINTED IN THE SIMULATION BEFORE FLIGHT TESTING - IT SETS RTB
+		log("Starting FCI landing sequence...")  # [TODO] CHECK THIS IS PRINTED IN THE SIMULATION BEFORE FLIGHT TESTING - IT SETS RTB
 		fcInterface.startLandingSequence()
 
 def captureImage(position, heading):
@@ -844,7 +849,7 @@ if not simulateFCInterface:
 
 	startTakeoffSequence()
 
-	print("Setting initial waypoint...")
+	log("Setting initial waypoint...")
 	setWaypoint(nextWaypoint)
 
 # Initialize Display
