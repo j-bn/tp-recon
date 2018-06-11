@@ -676,7 +676,7 @@ def imageCaptured(imageCap):
 # ----------
 
 # Initialise camera
-if isLinux:
+if isLinux and not simulateCamera:
 	camera = PiCamera()
 	camera.resolution = resH, resV
 
