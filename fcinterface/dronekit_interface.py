@@ -65,7 +65,7 @@ class FCInterface:
 				# except:
 				# 	pass
 
-			elif read.contains('COMMAND'): 	# first line so will begin with ...>
+			elif read.contains('COMMAND'): 	# first line so will begin with ...> meaning startswith doesnt work
 				stackHeight += 1
 
 			elif read.startswith('DONE'):
