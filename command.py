@@ -784,7 +784,7 @@ def onStableHoverAchieved():
 	log("Reached waypoint")
 
 	# rotate to waypoint heading before continuing
-	if nextWaypoint.heading:
+	if not simulateFCInterface and nextWaypoint.heading:
 		fcInterface.setHeading(deg(nextWaypoint.heading.bearing())) 	# set exact heading (not a parralel one) because the camera needs to point the correct direction [TODO] or maybe not - do the positions get translated based on captured image rect or planned rect?
 		time.sleep(15) 	# wait for rotation to complete (assuming 20 deg/s, 180 deg rotation -> 9s) 	[TODO] should really be callback based
 
