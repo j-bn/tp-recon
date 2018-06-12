@@ -927,6 +927,10 @@ while 1:
 		# sys.exit is better practice than exit or quit
 		# [https://stackoverflow.com/questions/19747371/python-exit-commands-why-so-many-and-when-should-each-be-used/19747562]
 	
+	# blink light
+	blink = int(getTime()) % 2 == 0: # time is even
+	GPIO.output(gpioPinLED, GPIO.HIGH if blink else GPIO.LOW)
+
 	# simulated waypoint tracking relies on regual polling of variables
 	# so these must be called regardless of enableDisplay
 	loc = updateLocation()
