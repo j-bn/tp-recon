@@ -47,6 +47,11 @@ def exit():
 	
 	sys.exit()
 
+def shutdown():
+	# sends shutdown command to host
+	shutdownCmd = "/usr/bin/sudo /sbin/shutdown -r now"
+	subprocess.Popen(shutdownCmd.split(), stdout=subprocess.PIPE)
+
 def log(*objects, end='\n'):
 	# log(*objects, sep=' ', end='\n', file=sys.stdout, flush=False)
 
@@ -926,12 +931,11 @@ while 1:
 
 	# respond to shutdown flag
 	if shutdownFlag:
-		exit()
-
-		realMission =  not simulateFCInterface and not enableDisplay and not simulateCamera and not enableSITL
+		realMission = isLinux and not simulateFCInterface and not enableDisplay and not simulateCamera and not enableSITL
 		if realMission:
-			pass # [TODO] shutdown Pi here?	
+			shutdown()
 		
+		exit()
 		break
 		# sys.exit is better practice than exit or quit
 		# [https://stackoverflow.com/questions/19747371/python-exit-commands-why-so-many-and-when-should-each-be-used/19747562]
