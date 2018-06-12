@@ -2,7 +2,7 @@ import os, sys
 import RPi.GPIO as GPIO # Import Raspberry Pi GPIO library
 import subprocess
 
-cmd = "command.py sim"
+cmd = "/home/pi/tp-recon/command.py sim"
 
 stage = 0
 def buttonPressed(channel):
