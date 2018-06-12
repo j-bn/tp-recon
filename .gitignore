@@ -114,3 +114,5 @@ __pycache__/geometry.cpython-36.pyc
 out/image*
 out-archive/image*
 log.txt
+*~
+tests/img*.jpg
