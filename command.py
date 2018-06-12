@@ -22,6 +22,7 @@ from fcinterface.dronekit_interface import FCInterface
 isLinux = sys.platform.startswith('linux')
 if isLinux:
 	from picamera import PiCamera
+	import RPi.GPIO as GPIO # Import Raspberry Pi GPIO library
 
 pyVersion = sys.version
 print("command.py running on Py", pyVersion)
@@ -41,6 +42,9 @@ print("command.py running on Py", pyVersion)
 # -----------------
 
 def exit():
+	if isLinux:
+		GPIO.cleanup() # Clean up
+	
 	sys.exit()
 
 def log(*objects, end='\n'):
@@ -298,6 +302,8 @@ captureAlt = float(overrideInput('capture altitude', captureAltOptimum))
 fovS, fovP = 62.2, 48.8 	# https://www.raspberrypi.org/documentation/hardware/camera/README.md
 resH, resV = 3280, 2464
 
+gpioPinLED = 18
+
 # Define coordinates
 log(header("Coordinate Systems"))
 log("North = N =  0 degrees = +ve Y cartesian")
@@ -346,6 +352,10 @@ if not simulateFCInterface:
 		log('Exiting...')
 		exit()
 
+# Setup GPIO
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+GPIO.setup(gpioPinLED, GPIO.OUT)
 
 # Setup GPS Locale
 # ----------------
@@ -565,6 +575,9 @@ def checkMissionComplete():
 	if allImagesCaptured and allCapturedImagesProcessed:
 		sTime = round(getTime(),2)
 		log("Mission complete at T+", sTime, "s - all", numImagesCaptured, "images captured and processed")
+
+		# Set LED on
+		GPIO.output(gpioPinLED, GPIO.HIGH)
 
 		# [TODO] Summarise info
 		missionReport()
@@ -910,7 +923,7 @@ while 1:
 
 	# respond to shutdown flag
 	if shutdownFlag:
-		sys.exit()
+		exit()
 		# sys.exit is better practice than exit or quit
 		# [https://stackoverflow.com/questions/19747371/python-exit-commands-why-so-many-and-when-should-each-be-used/19747562]
 	

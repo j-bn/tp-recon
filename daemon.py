@@ -2,7 +2,9 @@ import os, sys
 import RPi.GPIO as GPIO # Import Raspberry Pi GPIO library
 import subprocess
 
+isLinux = sys.platform.startswith('linux')
 cmd = "/home/pi/tp-recon/command.py sim"
+shutdownCommand = "/usr/bin/sudo /sbin/shutdown -r now"
 
 stage = 0
 def buttonPressed(channel):
@@ -13,16 +15,18 @@ def buttonPressed(channel):
     
 	if stage == 1: 	# arm
 		print('Arming Pi...')
-		if sys.platform.startswith('linux'):
+		if isLinux:
 			subprocess.call("python3 " + cmd, shell=True)
 		else:
 			os.system("start cmd /K python " + cmd) #/K keeps the window, /C executes and dies (popup)
-	elif stage == 2: 	# shutdown
+	elif stage == 2: # disarm and shutdown
+		if isLinux:
+			subprocess.Popen(shutdownCommand.split(), stdout=subprocess.PIPE)
 		exit()
 
 def exit():
 	GPIO.cleanup() # Clean up
-	# shut down command.py and the Pi?
+	sys.exit()
 
 GPIO.setwarnings(False) # Ignore warning for now
 GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
