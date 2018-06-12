@@ -548,6 +548,7 @@ log(header("Flight Log"))
 log("Initial waypoint:", nextWaypoint)
 
 # Mission completion check
+# checks when reconnaissance is complete
 # used because theoretically this could be found in two ways
 # 1. imageProcessed 	- all images processed (only significant if both search areas are complete)
 # 2. getNextWaypoint 	- returning to base (very unlikely/impossible because last image will not have, so call is not included)
@@ -569,7 +570,7 @@ def checkMissionComplete():
 		missionReport()
 
 		log("")
-		inputC("Press enter to shutdown:")
+		inputC("Press enter to shutdown:") 	# inputC will return enter to skip this in cfg missions
 		log("Shutting down...")
 		shutdownFlag = 1 # checkMissionComplete can be called by a thread callback, so exit needs to be called elsewhere
 
