@@ -9,8 +9,6 @@ Part of the reconnaissance system for Team Peryton's (University of Surrey) entr
 __author__ = "James Thornton"
 
 import os, sys
-print("Recon.py Py Version:", sys.version)
-
 # from __future__ import print_function
 import shutil
 import numpy
@@ -126,7 +124,7 @@ def getPixelSize(img, alt):
 	return x
 
 def processImage(img, pixelSize, imgID=None, saveInputImageWithMetadata=None):
-	print("Py Version:", sys.version)
+	print("Recon.py Py Version:", sys.version)
 
 	# ignore enableLogging
 	print("Started processing image", imgID)

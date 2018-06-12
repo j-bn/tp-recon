@@ -576,15 +576,18 @@ def checkMissionComplete():
 		sTime = round(getTime(),2)
 		log("Mission complete at T+", sTime, "s - all", numImagesCaptured, "images captured and processed")
 
-		# Set LED on
-		GPIO.output(gpioPinLED, GPIO.HIGH)
+		# Set LED on until it will turn off once the Pi shuts down (on next display/sim loop)
+		if isLinux:
+			GPIO.output(gpioPinLED, GPIO.HIGH)
 
 		# [TODO] Summarise info
 		missionReport()
 
 		log("")
 		inputC("Press enter to shutdown:") 	# inputC will return enter to skip this in cfg missions
-		log("Shutting down...")
+		log("Exiting...")
+		
+		time.sleep(5)
 		shutdownFlag = 1 # checkMissionComplete can be called by a thread callback, so exit needs to be called elsewhere
 
 # Summarise, report and save mission data
@@ -924,11 +927,17 @@ while 1:
 	# respond to shutdown flag
 	if shutdownFlag:
 		exit()
+
+		realMission =  not simulateFCInterface and not enableDisplay and not simulateCamera and not enableSITL
+		if realMission:
+			pass # [TODO] shutdown Pi here?	
+		
+		break
 		# sys.exit is better practice than exit or quit
 		# [https://stackoverflow.com/questions/19747371/python-exit-commands-why-so-many-and-when-should-each-be-used/19747562]
 	
 	# blink light
-	blink = int(getTime()) % 2 == 0: # time is even
+	blink = int(getTime()) % 2 == 0 # time is even
 	GPIO.output(gpioPinLED, GPIO.HIGH if blink else GPIO.LOW)
 
 	# simulated waypoint tracking relies on regual polling of variables
