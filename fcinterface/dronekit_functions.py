@@ -217,7 +217,7 @@ def startTakeoffSequence():
 	else:
 		print 'vehicle already armed'
 	
-	print 'taking off...'
+	print 'taking off... (FCI-F)'
 	vehicle.simple_takeoff(10)
 	time.sleep(1)
 
