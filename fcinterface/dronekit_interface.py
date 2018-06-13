@@ -163,6 +163,7 @@ class FCInterface:
 		"""
 		arms the copter then takes off to 10 meters
 		"""
+		print("FCI-I: starting take-off sequence")
 		self.interface('startTakeoffSequence')
 
 	def startLandingSequence(self):

@@ -1,0 +1,26 @@
+http://www.eutypon.gr/eutypon/pdf/e2012-29/e29-a01.pdf
+https://github.com/tesseract-ocr/tesseract/wiki/Training-Tesseract-3.03%E2%80%933.05#generate-training-images-and-box-files
+https://github.com/tesseract-ocr/tesseract/wiki/Training-Tesseract-%E2%80%93-Make-Box-Files
+
+1: Generate a training image (36 characters x 4 orientations = 144 blocks)
+python gen-training-image.py
+-> train.tif
+
+2: Run through tesseract to generate a rough box file
+tesseract [lang].[fontname].exp[num].tif [lang].[fontname].exp[num] batch.nochop makebox
+e.g tesseract eng.timesitalic.exp0.tif eng.timesitalic.exp0 batch.nochop makebox
+-> eng.box
+
+3: Modify the box file
+python modify-box-file.py
+-> enr.box 	(en = english, r = rotated)
+
+tesseract enr.tif enr box.train.stderr
+unicharset_extractor enr.box
+set_unicharset_properties -U unicharset -O unicharset-mod --script_dir=training/langdata
+mftraining -F font-properties -U unicharset-mod -O enr.unicharset enr-mod.tr
+cntraining enr-mod.tr
+
+combine_tessdata enr.
+
+tesseract image.tif output -l lang

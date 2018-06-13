@@ -876,6 +876,7 @@ if not simulateFCInterface:
 	fcInterface.setNotificationCallback('waypointReached', onStableHoverAchieved)
 
 	startTakeoffSequence()
+	time.sleep(10) # wait for takeoff to complete
 
 	log("Setting initial waypoint...")
 	setWaypoint(nextWaypoint)
