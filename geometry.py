@@ -52,6 +52,8 @@ class Vector2:
 
 	# Mutators
 	def rotate(self, a):
+		# rotate a vector CCW by a radians		
+		
 		x2 = math.cos(a) * self.x - math.sin(a) * self.y
 		y2 = math.sin(a) * self.x + math.cos(a) * self.y
 
@@ -167,6 +169,7 @@ class Rect2:
 
 	# Mutators
 	def rotate(self, a):
+		# rotate a vector CCW by a radians (same as Vector2)	
 		self.primary.rotate(a)
 		return self
 

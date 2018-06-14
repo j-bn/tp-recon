@@ -42,15 +42,23 @@ print("command.py running on Py", pyVersion)
 # -----------------
 
 def exit():
+	logFile.close()
+	
 	if isLinux:
 		GPIO.cleanup() # Clean up
 	
+	realMission = isLinux and not simulateFCInterface and not enableDisplay and not simulateCamera and not enableSITL
+	if realMission:
+		log("Real mission detected, shutting down...")
+		# sends shutdown command to host
+		shutdownCmd = "/usr/bin/sudo /sbin/shutdown -r now"
+		subprocess.Popen(shutdownCmd.split(), stdout=subprocess.PIPE)
+	else:
+		log("Non-real mission, exiting program...")
+	
 	sys.exit()
-
-def shutdown():
-	# sends shutdown command to host
-	shutdownCmd = "/usr/bin/sudo /sbin/shutdown -r now"
-	subprocess.Popen(shutdownCmd.split(), stdout=subprocess.PIPE)
+	# sys.exit is better practice than exit or quit
+	# [https://stackoverflow.com/questions/19747371/python-exit-commands-why-so-many-and-when-should-each-be-used/19747562]
 
 def log(*objects, end='\n'):
 	# log(*objects, sep=' ', end='\n', file=sys.stdout, flush=False)
@@ -127,12 +135,12 @@ def createSearchAreas(n):
 				cx = float(inputC("  X coord (m) = "))
 				cy = float(inputC("  Y coord (m) = "))
 			an = float(inputC("  Rotation (CW, deg) = "))
-			sp = float(inputC("  Full size 'width' in Primary axis (m) = "))
-			ss = float(inputC("  Full size 'height' in Secondary axis (m) = "))
+			sp = float(inputC("  Full size in Primary axis (m) - 'width' when not rotated = "))
+			ss = float(inputC("  Full size in Secondary axis (m) - 'height' when not rotated = "))
 
 			center = Vector2(cx, cy)
 			size = Vector2(sp, ss) / 2
-			rects[i] = Rect2.aabb(center, size).rotate(deg(an))
+			rects[i] = Rect2.aabb(center, size).rotate(-rad(an))
 
 		log(rects)
 		return rects
@@ -589,7 +597,7 @@ def checkMissionComplete():
 		missionReport()
 
 		log("")
-		inputC("Press enter to shutdown:") 	# inputC will return enter to skip this in cfg missions
+		inputC("Press enter to exit:") 	# inputC will return enter to skip this in cfg missions
 		log("Exiting...")
 		
 		time.sleep(5)
@@ -934,15 +942,9 @@ if enableDisplay:
 while 1:
 
 	# respond to shutdown flag
-	if shutdownFlag:
-		realMission = isLinux and not simulateFCInterface and not enableDisplay and not simulateCamera and not enableSITL
-		if realMission:
-			shutdown()
-		
+	if shutdownFlag:		
 		exit()
 		break
-		# sys.exit is better practice than exit or quit
-		# [https://stackoverflow.com/questions/19747371/python-exit-commands-why-so-many-and-when-should-each-be-used/19747562]
 	
 	# blink light
 	blink = int(getTime()) % 2 == 0 # time is even

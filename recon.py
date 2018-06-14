@@ -34,7 +34,7 @@ else:
 
 enableLogging = 0
 debugMode = 0
-bypassCharsetCheck = 1
+bypassCharsetCheck = 0 	# Beckie suggested this should remain off
 
 # Utility Functions
 # -----------------
