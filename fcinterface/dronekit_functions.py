@@ -230,6 +230,26 @@ def startLandingSequence():
 	print 'Return to Land executed'
 	print 'DONE'
 
+def waitForModeArm():
+	# Calculate delay
+	t = 5 * 60 # seconds
+	d = 0.5
+	n = int(round(t / d))
+
+	success = 0  # did it arm (1) or time out (0)?
+	for i in range(0,n):
+		mode = str(vehicle.mode)
+		if mode == "GUIDED":
+			success = 1
+			break
+
+		time.sleep(d)
+
+	print 'Succesfully mode armed' if success else 'Wait for mode arm timed out'
+
+	print success
+	print 'DONE'
+	
 def waitForArm():
 	# Calculate delay
 	t = 5 * 60 # seconds
@@ -267,7 +287,7 @@ while 1:
 
 	# submit command
 	# (only if vehicle has not been taken over my manual control)
-	if vehicleMode == "GUIDED" or vehicleMode == "(NC)":
+	if vehicleMode == "GUIDED" or vehicleMode == "(NC)" or cmd == "waitForArm":
 		print("COMMAND " + cmd)
 
 		# commands are exclusive so elif will be much faster than if

@@ -561,7 +561,7 @@ def getNextWaypoint():
 # (takeoff procedure will arm the vehicle if not already)
 inputC("Press enter to start flight...")
 if waitForArm and not simulateFCInterface:
-	success = fcInterface.waitForArm()
+	success = fcInterface.waitForModeArm()
 	if success:
 		log('Successfully armed')
 	else:

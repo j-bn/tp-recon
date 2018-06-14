@@ -178,6 +178,13 @@ class FCInterface:
 		"""
 		ans = self.interface('waitForArm')
 		return int(ans) # convert to bool (int)
+
+	def waitForModeArm(self):
+		"""
+		Blocks caller until vehicle is externally set to GUIDED mode (e.g. by RC transmitter for remote take-off), or timeout is reached
+		"""
+		ans = self.interface('waitForModeArm')
+		return int(ans) # convert to bool (int)		
 		
 	# (superseded by notification system)
 	# def onActionCompleted(self, fn):
