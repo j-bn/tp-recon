@@ -134,7 +134,7 @@ def createSearchAreas(n):
 			elif coordMode == 'cartesian':
 				cx = float(inputC("  X coord (m) = "))
 				cy = float(inputC("  Y coord (m) = "))
-			an = float(inputC("  Rotation (CW, deg) = "))
+			an = float(inputC("  Rotation (CW from North, deg) = "))
 			sp = float(inputC("  Full size in Primary axis (m) - 'width' when not rotated = "))
 			ss = float(inputC("  Full size in Secondary axis (m) - 'height' when not rotated = "))
 
