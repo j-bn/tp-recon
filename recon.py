@@ -34,6 +34,7 @@ else:
 
 enableLogging = 0
 debugMode = 0
+bypassCharsetCheck = 1
 
 # Utility Functions
 # -----------------
@@ -487,9 +488,9 @@ def processImage(img, pixelSize, imgID=None, saveInputImageWithMetadata=None):
 
 			if debugMode: imgD.save("out/tgt-" + str(g) + "-d-" + str(a) + ".bmp")
 
-			# save charachters that fit mission profile
+			# save characters that fit mission profile
 			c = ocrText
-			if len(c) == 1 and c in charset:
+			if (len(c) == 1 and c in charset) or bypassCharsetCheck:
 				possibleChars.append(c)
 
 		groupsPossibleChars[g] = possibleChars
