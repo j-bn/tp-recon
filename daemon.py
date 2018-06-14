@@ -1,9 +1,10 @@
 import os, sys
 import RPi.GPIO as GPIO # Import Raspberry Pi GPIO library
 import subprocess
+import pytesseract
 
 isLinux = sys.platform.startswith('linux')
-cmd = "command.py sim"
+cmd = "command.py sim &"
 shutdownCommand = "/usr/bin/sudo /sbin/shutdown -r now"
 
 stage = 0
@@ -36,8 +37,8 @@ GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
 GPIO.setup(10, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # Set pin 10 to be an input pin and set initial value to be pulled low (off)
 
 GPIO.add_event_detect(10, GPIO.RISING, callback=buttonPressed) # Setup event on pin 10 rising edge
-print("Listening...")
+print("Listening for button press...")
 
 # shutdown process
-input("Press enter to exit\n") # Run until someone presses enter
+input("Press enter to exit...") # Run until someone presses enter
 exit()
