@@ -456,12 +456,13 @@ if 1:  # [TODO] just for debugging - shows capture rects
 		
 	# test actual overlap
 	# (compares distance between capture points to *real* image field size)
-	log("Actual calculated overlap:\n correct number below should be just greater than root2 * target width = 2.83 for competition")
-	a = captureRects[0]
-	b = captureRects[1]
-	centreDist = (a.center - b.center).magnitude()
-	log(" Overlap by width:",  round(w - centreDist, 2), "m")
-	log(" Overlap by height:", round(h - centreDist, 2), "m")
+	if len(captureRects) >= 2: # requires two or more capture rects
+		log("Actual calculated overlap:\n correct number below should be just greater than root2 * target width = 2.83 for competition")
+		a = captureRects[0]
+		b = captureRects[1]
+		centreDist = (a.center - b.center).magnitude()
+		log(" Overlap by width:",  round(w - centreDist, 2), "m")
+		log(" Overlap by height:", round(h - centreDist, 2), "m")
 
 # define search area waypoints
 saWaypoints = [[]] * searchAreaCount
