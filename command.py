@@ -61,7 +61,7 @@ def exit():
 	# [https://stackoverflow.com/questions/19747371/python-exit-commands-why-so-many-and-when-should-each-be-used/19747562]
 
 def log(*objects, end='\n'):
-	# log(*objects, sep=' ', end='\n', file=sys.stdout, flush=False)
+	# print(*objects, sep=' ', end='\n', file=sys.stdout, flush=False)
 
 	print(*objects, end=end) 				# to stdout
 
@@ -181,13 +181,16 @@ def inputGPSPos():
 # Setup Log File
 # --------------
 
-logFile = open('log.txt', 'w+') # also empties the file
+# open('file.txt', 'w', bufsize) - 0 = unbuffered, 1 = line buffered, x = any size
+# https://stackoverflow.com/questions/3167494/how-often-does-python-flush-to-a-file#3168436
+
+logFile = open('log.txt', 'w+', 1) # also empties the file
 log('Log file set up at', datetime.datetime.now())
 
 # Auto-Configuration
 # ------------------
 
-configLines = None 	# next 
+configLines = None 	# emptied one element at a time
 
 if len(sys.argv) > 1: 	# first element is the script name
 	filename = 'config/' + sys.argv[1] + '.cfg'
