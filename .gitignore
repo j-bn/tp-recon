@@ -116,3 +116,4 @@ out-archive/image*
 log.txt
 *~
 tests/img*.jpg
+.DS_Store
